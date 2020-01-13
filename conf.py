@@ -14,8 +14,8 @@ template = {
     "path": "../Galileo"
 }
 enable_jsdelivr = {
-    "enabled": False,
-    "repo": ""
+    "enabled": True,
+    "repo": "Chichele/Blog-With-GitHub-Boilerplate@gh-pages"
 }
 
 # 站点设置
@@ -25,7 +25,7 @@ site_build_date = "2019-12-18T16:51+08:00"
 author = "Chichele"
 email = ""
 author_homepage = "https://chichele.life"
-description = "time has passed us by"
+description = "but time has passed us by"
 key_words = ['Maverick', 'Chechele', 'Galileo', 'blog']
 language = 'zh-CN'
 external_links = [
@@ -59,11 +59,6 @@ nav = [
 ]
 
 social_links = [
-    {
-        "name": "Twitter",
-        "url": "https://twitter.com/Chichele",
-        "icon": "gi gi-twitter"
-    },
     {
         "name": "GitHub",
         "url": "https://github.com/Chichele",
