@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Don't ask me why</title><link>/Blog-With-GitHub-Boilerplate/</link><description>time has passed us by</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>/Blog-With-GitHub-Boilerplate/logo.png</url><title>Don't ask me why</title><link>/Blog-With-GitHub-Boilerplate/</link></image><language>zh-CN</language><lastBuildDate>Mon, 13 Jan 2020 12:44:46 +0806</lastBuildDate><pubDate>Mon, 13 Jan 2020 12:44:46 +0806</pubDate><item><title>戴尔笔记本win8.1+UEFI下安装Ubuntu14.04过程记录</title><link>/Blog-With-GitHub-Boilerplate/archives/戴尔笔记本win8.1+UEFI下安装Ubuntu14.04过程记录/</link><description>&lt;h2&gt;瞎扯在前&lt;/h2&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Don't ask me why</title><link>/Blog-With-GitHub-Boilerplate/</link><description>but time has passed us by</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/logo.png</url><title>Don't ask me why</title><link>/Blog-With-GitHub-Boilerplate/</link></image><language>zh-CN</language><lastBuildDate>Mon, 13 Jan 2020 12:51:15 +0806</lastBuildDate><pubDate>Mon, 13 Jan 2020 12:51:15 +0806</pubDate><item><title>戴尔笔记本win8.1+UEFI下安装Ubuntu14.04过程记录</title><link>/Blog-With-GitHub-Boilerplate/archives/戴尔笔记本win8.1+UEFI下安装Ubuntu14.04过程记录/</link><description>&lt;h2&gt;瞎扯在前&lt;/h2&gt;
 &lt;hr&gt;
 &lt;p&gt;笔记本刚买不久就想装ubuntu来着，但结果发现BIOS启动方式为UEFI，网上一搜索发现跟以前的双系统安装方法不一样，看具体教程感觉相当复杂，而且也有点担心折腾跪了这新本本所以一直没有动手。但昨天又心血来潮，看了几个教程后于是决定开搞！虽然中间不是很顺利，但最后结果发现也没有多复杂。&lt;/p&gt;
 &lt;blockquote&gt;&lt;p&gt;环境：我的笔记本型号是戴尔Insprion 14R-5437,系统为原装Win8.1，BIOS启动方式为UEFI。用事先制作的启动U盘，安装的是Ubuntu14.04 64位。&lt;/p&gt;
@@ -15,7 +15,7 @@
 &lt;li&gt;&lt;p&gt;重启电脑按F12进入启动设备选择。我选的是UEFI方式启动的U盘。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;进入安装程序后，一路直走到达安装方式的选择画面（类似下图，仅供参考）。我到达这画面时，它并没有检测出我硬盘上的win8.1来，所以我选择了最后一项，“其他选项”。
-&lt;figure style="flex: 58.58585858585859" &gt;&lt;img width="580" height="495" src="/Blog-With-GitHub-Boilerplate/archives/assets/12e316a855020ed174ab97f886b979b6.png" /&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;figure style="flex: 58.58585858585859" &gt;&lt;img width="580" height="495" src="https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/archives/assets/12e316a855020ed174ab97f886b979b6.png" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;分配空间。主要有两部分：a）点+，然后选大小（记得留swap的空间），选主分区，ext4格式，从起始点开始，选挂载到 / ，这空间就代表以后ubuntu系统能使用的空间大小。b）剩下的空间（4G-8G，一般不小于你的内存大小，步骤类&amp;#20284;上面），新建一个swap分区：选大小，选逻辑分区，从起始点开始，挂载到swap。这里 / 下包含了/boot，/home，/opt等等，也有人为这几个单独建立分区也是可以的，不过我建议等你懂了之后下次再试吧。在此页面上你应该能找到一个efi分区，它就是UEFI的启动文件存放的地方。&lt;/p&gt;
 &lt;/li&gt;
@@ -79,15 +79,15 @@
 &lt;p&gt;$$C_{m\times k}=A_{m\times n}\cdot B_{n\times k}$$&lt;/p&gt;
 &lt;h2&gt;Figures&lt;/h2&gt;
 &lt;h3&gt;Single figure&lt;/h3&gt;
-&lt;p&gt;&lt;figure style="flex: 92.88888888888889" &gt;&lt;img width="836" height="450" src="/Blog-With-GitHub-Boilerplate/archives/assets/e0affbc80ccb2d596c87b520e37e7071.jpg" /&gt;&lt;figcaption&gt;Princess Mononoke&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure style="flex: 92.88888888888889" &gt;&lt;img width="836" height="450" src="https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/archives/assets/e0affbc80ccb2d596c87b520e37e7071.jpg" /&gt;&lt;figcaption&gt;Princess Mononoke&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;h3&gt;Photoset&lt;/h3&gt;
 &lt;div class="photos"&gt;
-&lt;figure style="flex: 75.0" &gt;&lt;img width="4032" height="2688" src="/Blog-With-GitHub-Boilerplate/archives/assets/4956a144888cdbbb6c2df1d1d15384b0.jpeg" /&gt;&lt;/figure&gt;
-&lt;figure style="flex: 50.03720238095238" &gt;&lt;img width="2690" height="2688" src="/Blog-With-GitHub-Boilerplate/archives/assets/4c66f0da616b08325b3aaa4c8b3f68e1.jpg" /&gt;&lt;/figure&gt;
-&lt;figure style="flex: 75.0" &gt;&lt;img width="4032" height="2688" src="/Blog-With-GitHub-Boilerplate/archives/assets/8b4d2334469ffa39b59e6fdb37c8c601.jpeg" /&gt;&lt;/figure&gt;&lt;/div&gt;&lt;div class="photos"&gt;
-&lt;figure style="flex: 75.0" &gt;&lt;img width="4032" height="2688" src="/Blog-With-GitHub-Boilerplate/archives/assets/0f5023d542a33e7c9d270f3cd6a99562.jpeg" /&gt;&lt;/figure&gt;
-&lt;figure style="flex: 75.0" &gt;&lt;img width="4032" height="2688" src="/Blog-With-GitHub-Boilerplate/archives/assets/20ec69d2a0276336f95e11f42866d17f.jpeg" /&gt;&lt;/figure&gt;
-&lt;figure style="flex: 75.0" &gt;&lt;img width="4032" height="2688" src="/Blog-With-GitHub-Boilerplate/archives/assets/2b8af25285e5a193729a350593113bad.jpeg" /&gt;&lt;/figure&gt;&lt;/div&gt;&lt;h2&gt;Table&lt;/h2&gt;
+&lt;figure style="flex: 75.0" &gt;&lt;img width="4032" height="2688" src="https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/archives/assets/4956a144888cdbbb6c2df1d1d15384b0.jpeg" /&gt;&lt;/figure&gt;
+&lt;figure style="flex: 50.03720238095238" &gt;&lt;img width="2690" height="2688" src="https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/archives/assets/4c66f0da616b08325b3aaa4c8b3f68e1.jpg" /&gt;&lt;/figure&gt;
+&lt;figure style="flex: 75.0" &gt;&lt;img width="4032" height="2688" src="https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/archives/assets/8b4d2334469ffa39b59e6fdb37c8c601.jpeg" /&gt;&lt;/figure&gt;&lt;/div&gt;&lt;div class="photos"&gt;
+&lt;figure style="flex: 75.0" &gt;&lt;img width="4032" height="2688" src="https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/archives/assets/0f5023d542a33e7c9d270f3cd6a99562.jpeg" /&gt;&lt;/figure&gt;
+&lt;figure style="flex: 75.0" &gt;&lt;img width="4032" height="2688" src="https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/archives/assets/20ec69d2a0276336f95e11f42866d17f.jpeg" /&gt;&lt;/figure&gt;
+&lt;figure style="flex: 75.0" &gt;&lt;img width="4032" height="2688" src="https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/archives/assets/2b8af25285e5a193729a350593113bad.jpeg" /&gt;&lt;/figure&gt;&lt;/div&gt;&lt;h2&gt;Table&lt;/h2&gt;
 &lt;table&gt;
 &lt;thead&gt;&lt;tr&gt;
 &lt;th&gt;header&lt;/th&gt;
