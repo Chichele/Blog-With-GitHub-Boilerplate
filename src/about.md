@@ -12,7 +12,7 @@ tags:
   - theme
 ---
 
-学习![AlanDecode/Blog-With-GitHub-Boilerplate](https://github.com/AlanDecode/Blog-With-GitHub-Boilerplate)搭建在Github的个人博客。
+学习[AlanDecode/Blog-With-GitHub-Boilerplate](https://github.com/AlanDecode/Blog-With-GitHub-Boilerplate)搭建在Github的个人博客。
 
 
 ## Contact
