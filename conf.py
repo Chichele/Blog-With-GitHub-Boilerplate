@@ -19,14 +19,14 @@ enable_jsdelivr = {
 }
 
 # 站点设置
-site_name = "我的个人博客"
+site_name = "Don't ask me why"
 site_logo = "${static_prefix}logo.png"
 site_build_date = "2019-12-18T16:51+08:00"
-author = "熊猫小A"
-email = "hi@imalan.cn"
-author_homepage = "https://www.imalan.cn"
-description = "只坚持一种正义。我的正义。"
-key_words = ['Maverick', '熊猫小A', 'Galileo', 'blog']
+author = "Chichele"
+email = ""
+author_homepage = "https://chichele.life"
+description = "time has passed us by"
+key_words = ['Maverick', 'Chechele', 'Galileo', 'blog']
 language = 'zh-CN'
 external_links = [
     {
@@ -35,9 +35,9 @@ external_links = [
         "brief": "🏄‍ Go My Own Way."
     },
     {
-        "name": "三無計劃",
-        "url": "https://www.imalan.cn",
-        "brief": "熊猫小A的主页。"
+        "name": "Don't ask me why",
+        "url": "https://Chichele.life",
+        "brief": "Chichele的主页。"
     }
 ]
 nav = [
@@ -61,18 +61,13 @@ nav = [
 social_links = [
     {
         "name": "Twitter",
-        "url": "https://twitter.com/AlanDecode",
+        "url": "https://twitter.com/Chichele",
         "icon": "gi gi-twitter"
     },
     {
         "name": "GitHub",
-        "url": "https://github.com/AlanDecode",
+        "url": "https://github.com/Chichele",
         "icon": "gi gi-github"
-    },
-    {
-        "name": "Weibo",
-        "url": "https://weibo.com/5245109677/",
-        "icon": "gi gi-weibo"
     }
 ]
 
