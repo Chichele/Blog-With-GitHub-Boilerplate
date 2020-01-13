@@ -2,9 +2,9 @@
 layout: post
 title: placement new的使用及好处
 categories: 
-    - Tech
+  - Tech
 tags: 
-    - C++
+  - C++
 date: 2014-08-17 16:59:02
 ---
 

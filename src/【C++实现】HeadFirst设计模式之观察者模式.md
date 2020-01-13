@@ -2,10 +2,10 @@
 layout: post
 title: 【C++实现】HeadFirst设计模式之观察者模式
 categories: 
-    - Tech
+  - Tech
 tags: 
-    - 设计模式
-    - C++
+  - 设计模式
+  - C++
 date: 2014-08-02 14:42:15
 ---
 

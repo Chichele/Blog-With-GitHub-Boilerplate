@@ -2,10 +2,10 @@
 layout: post
 title: Web自动化测试工具——Selenium
 categories: 
-    - Tech
+  - Tech
 tags: 
-    - 测试
-    - python
+  - 测试
+  - python
 date: 2014-09-18 23:49:59
 ---
 

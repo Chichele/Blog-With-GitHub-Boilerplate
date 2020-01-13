@@ -2,10 +2,10 @@
 layout: post
 title: Codechef July Challenge 2014部分题解
 categories: 
-    - Tech
+  - Tech
 tags: 
-    - C++
-    - Codechef
+  - C++
+  - Codechef
 date: 2014-07-14 17:31:52
 ---
 

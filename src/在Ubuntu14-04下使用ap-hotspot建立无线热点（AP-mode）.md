@@ -2,9 +2,9 @@
 layout: post
 title: 在Ubuntu14.04下使用ap-hotspot建立无线热点（AP mode）
 categories: 
-    - 瞎折腾
+  - 瞎折腾
 tags: 
-    - ubuntu
+  - ubuntu
 date: 2014-08-15 22:36:02
 ---
 

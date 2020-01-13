@@ -2,9 +2,9 @@
 layout: post
 title: 贴吧大召唤术——Python实现提取贴吧页面的用户id
 categories: 
-    - python
+  - 瞎折腾
 tags: 
-    - python
+  - python
 date: 2014-05-03 15:31:42
 ---
 

@@ -2,9 +2,9 @@
 layout: post
 title: Requests模块中持续性的 Cookie 会话
 categories: 
-    - Tech
+  - Tech
 tags: 
-    - python
+  - python
 date: 2014-08-28 11:41:38
 ---
 

@@ -2,9 +2,9 @@
 layout: post
 title: Python模拟登录wap版百度贴吧+自动回贴
 categories: 
-    - 瞎折腾
+  - 瞎折腾
 tags: 
-    - python
+  - python
 date: 2014-09-18 23:09:46
 ---
 

@@ -2,10 +2,10 @@
 layout: post
 title: sae python中Mysql中文乱码的解决
 categories: 
-    - 瞎折腾
+  - 瞎折腾
 tags: 
-    - sae
-    - python
+  - sae
+  - python
 date: 2014-06-16 16:54:12
 ---
 

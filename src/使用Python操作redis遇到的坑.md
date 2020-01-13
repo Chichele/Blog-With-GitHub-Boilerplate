@@ -3,10 +3,10 @@ layout: post
 title: 使用Python操作redis遇到的坑
 date: 2015-05-11 00:37:15
 categories: 
-    - python
+  - python
 tags: 
-    - python
-    - redis
+  - python
+  - redis
 ---
 ## 写在前面
 基于Python3.4，往redis里插入数据后再读出来时所有键与值都是byte类型的，就是说如果你要使用这些值全部都得转换编码！想想就崩溃！但又想想肯定会有简单的解决方法...

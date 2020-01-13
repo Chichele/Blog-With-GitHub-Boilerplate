@@ -2,9 +2,9 @@
 layout: post
 title: Python爬取京东商品数据
 categories: 
-	- 瞎折腾
+  - 瞎折腾
 tags: 
-	- python
+  - python
 date: 2014-06-16 17:08:41
 ---
 
