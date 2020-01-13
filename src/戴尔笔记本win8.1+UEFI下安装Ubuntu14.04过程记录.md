@@ -2,7 +2,7 @@
 layout: post
 title: 戴尔笔记本win8.1+UEFI下安装Ubuntu14.04过程记录
 categories: 
-  - 默认分类
+  - 瞎折腾
 tags: 
   - ubuntu
 date: 2014-05-11 22:41:59

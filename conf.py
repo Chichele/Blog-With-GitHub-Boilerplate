@@ -33,11 +33,6 @@ external_links = [
         "name": "Maverick",
         "url": "https://github.com/AlanDecode/Maverick",
         "brief": "🏄‍ Go My Own Way."
-    },
-    {
-        "name": "Don't ask me why",
-        "url": "https://Chichele.life",
-        "brief": "Chichele的主页。"
     }
 ]
 nav = [
