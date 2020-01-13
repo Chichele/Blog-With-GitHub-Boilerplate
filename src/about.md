@@ -4,7 +4,7 @@ title: 关于
 slug: about
 date: 2017/06/28 17:26:00
 status: publish
-author: AlanDecode
+author: Chichele
 categories: 
   - Maverick
   - Dev
@@ -12,11 +12,10 @@ tags:
   - theme
 ---
 
-这里是我的个人博客，通过 GitHub 管理与构建。
+学习![AlanDecode/Blog-With-GitHub-Boilerplate](https://github.com/AlanDecode/Blog-With-GitHub-Boilerplate)搭建在Github的个人博客。
 
 
 ## Contact
 
-Email: hi#imalan.cn (replace # with @)
 
-Telegram：[AlanDecode](https://t.me/alandecode)
+Telegram：[Chichele](https://t.me/Chichele)
