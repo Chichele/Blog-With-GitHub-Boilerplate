@@ -3,7 +3,7 @@ layout: post
 title: 使用Python操作redis遇到的坑
 date: 2015-05-11 00:37:15
 categories: 
-  - python
+  - 瞎折腾
 tags: 
   - python
   - redis
