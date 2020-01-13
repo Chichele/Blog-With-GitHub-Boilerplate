@@ -23,18 +23,18 @@
         }
     </script>
     
-<title>戴尔笔记本win8.1+UEFI下安装Ubuntu14.04过程记录 - Don't ask me why</title>
+<title>Web自动化测试工具——Selenium - Don't ask me why</title>
 <meta name="author" content="" />
-<meta name="description" content="瞎扯在前" />
-<meta property="og:title" content="戴尔笔记本win8.1+UEFI下安装Ubuntu14.04过程记录 - Don't ask me why" />
-<meta property="og:description" content="瞎扯在前" />
+<meta name="description" content="在最近的Web课程设计上我接触到了Selenium这款Web自动化测试工具，它可以通过一系列find_element()方法定位到目标元素，对其发送模拟按键操作，使操作自动化。" />
+<meta property="og:title" content="Web自动化测试工具——Selenium - Don't ask me why" />
+<meta property="og:description" content="在最近的Web课程设计上我接触到了Selenium这款Web自动化测试工具，它可以通过一系列find_element()方法定位到目标元素，对其发送模拟按键操作，使操作自动化。" />
 <meta property="og:site_name" content="Don't ask me why" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/archives/戴尔笔记本win8.1+UEFI下安装Ubuntu14.04过程记录/" />
+<meta property="og:url" content="/archives/Web自动化测试工具——Selenium/" />
 <meta property="og:image" content="" />
-<meta property="article:published_time" content="2014-05-11T22:41:59-00.00" />
-<meta name="twitter:title" content="戴尔笔记本win8.1+UEFI下安装Ubuntu14.04过程记录 - Don't ask me why" />
-<meta name="twitter:description" content="瞎扯在前" />
+<meta property="article:published_time" content="2014-09-18T23:49:59-00.00" />
+<meta name="twitter:title" content="Web自动化测试工具——Selenium - Don't ask me why" />
+<meta name="twitter:description" content="在最近的Web课程设计上我接触到了Selenium这款Web自动化测试工具，它可以通过一系列find_element()方法定位到目标元素，对其发送模拟按键操作，使操作自动化。" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:image" content="" />
 
@@ -66,56 +66,54 @@
 <main>    
     <section class="ga-section ga-content">
         <article class="yue">
-            <h1 class="ga-post_title">戴尔笔记本win8.1+UEFI下安装Ubuntu14.04过程记录</h1>
+            <h1 class="ga-post_title">Web自动化测试工具——Selenium</h1>
             <span class="ga-post_meta ga-mono">
                 <span></span>
                 <time>
-                    2014-05-11
+                    2014-09-18
                 </time>
                 
-                in <a no-style class="category" href="/category/瞎折腾/">
-                    瞎折腾
+                in <a no-style class="category" href="/category/Tech/">
+                    Tech
                 </a>
                 
                 
             </span>
             <div class="ga-content_body">
-                <h2>瞎扯在前</h2>
-<hr>
-<p>笔记本刚买不久就想装ubuntu来着，但结果发现BIOS启动方式为UEFI，网上一搜索发现跟以前的双系统安装方法不一样，看具体教程感觉相当复杂，而且也有点担心折腾跪了这新本本所以一直没有动手。但昨天又心血来潮，看了几个教程后于是决定开搞！虽然中间不是很顺利，但最后结果发现也没有多复杂。</p>
-<blockquote><p>环境：我的笔记本型号是戴尔Insprion 14R-5437,系统为原装Win8.1，BIOS启动方式为UEFI。用事先制作的启动U盘，安装的是Ubuntu14.04 64位。</p>
-</blockquote>
-<p><strong>本文不是完整教程，所以建议参阅结合网上别的教程来操作。</strong></p>
-<h2>过程</h2>
-<hr>
-<ol>
-<li><p>在安装步骤开始前，当然得先分出一部分空闲空间。建议是从硬盘上最后一个分区分割出足够的空间，不用分区格式化，留着它空白就行。这里可以使用分区助手解决。</p>
-</li>
-<li><p>首先当然得到BIOS设置下关闭罪恶之源——<strong>secure boot</strong>。但是每个机型的BIOS设置都不相同，所以自己发挥吧。</p>
-</li>
-<li><p>重启电脑按F12进入启动设备选择。我选的是UEFI方式启动的U盘。</p>
-</li>
-<li><p>进入安装程序后，一路直走到达安装方式的选择画面（类似下图，仅供参考）。我到达这画面时，它并没有检测出我硬盘上的win8.1来，所以我选择了最后一项，“其他选项”。
-<figure style="flex: 58.58585858585859" ><img width="580" height="495" src="https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/archives/assets/12e316a855020ed174ab97f886b979b6.png" /></figure></p>
-</li>
-<li><p>分配空间。主要有两部分：a）点+，然后选大小（记得留swap的空间），选主分区，ext4格式，从起始点开始，选挂载到 / ，这空间就代表以后ubuntu系统能使用的空间大小。b）剩下的空间（4G-8G，一般不小于你的内存大小，步骤类&#20284;上面），新建一个swap分区：选大小，选逻辑分区，从起始点开始，挂载到swap。这里 / 下包含了/boot，/home，/opt等等，也有人为这几个单独建立分区也是可以的，不过我建议等你懂了之后下次再试吧。在此页面上你应该能找到一个efi分区，它就是UEFI的启动文件存放的地方。</p>
-</li>
-<li><p>完成以上步骤就可以开始安装了，nothing more。</p>
-</li>
-<li>完成ubuntu的安装后，重启电脑，能看到双系统选择画面，就代表双系统安装成功了。</li>
-</ol>
-<h2>结束语</h2>
-<hr>
-<p>一开始我是用<code>ubuntu12.04.2</code> 64位来尝试的，但在第四步分配完空间进入下一步之后总是提示什么无法安装到/target。后来下了14.04才成功了。</p>
-<p>以上是我亲测的安装过程，不代表别的机型也能按此成功，不过程序猿那颗敢于折腾的心不能丢啊</p>
-<p>ps:话说回来，以前都是在低配置的机器上玩ubuntu，这次在新本子上运行真心流畅舒服!</p>
+                <p>在最近的Web课程设计上我接触到了<code>Selenium</code>这款Web自动化测试工具，它可以通过一系列<code>find_element()</code>方法定位到目标元素，对其发送模拟按键操作，使操作自动化。</p>
+<p>首先，使用pip安装Selenium的Python模块。</p>
+<p><code>find_element_by_name()</code>方法就是通过<code>name</code>属性来定位元素，然后通过<code>send_keys()</code>发送模拟按键。基于这样的操作基本可以完成各种web下的模拟操作。下面是我写的例程:</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.common.keys</span> <span class="kn">import</span> <span class="n">Keys</span>
+
+<span class="n">chrome_driver_path</span> <span class="o">=</span> <span class="s2">&quot;/usr/local/lib/python2.7/dist-packages/selenium/webdriver/chrome/chromedriver&quot;</span>
+<span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">(</span><span class="n">chrome_driver_path</span><span class="p">)</span>
+<span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;http://localhost:8000/&quot;</span><span class="p">)</span>
+<span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;http://localhost:8000/login&quot;</span><span class="p">)</span>
+<span class="k">assert</span> <span class="s2">&quot;Bookstore&quot;</span> <span class="ow">in</span> <span class="n">driver</span><span class="o">.</span><span class="n">title</span>
+<span class="n">elem_username</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">&quot;username&quot;</span><span class="p">)</span>
+<span class="n">elem_username</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="s2">&quot;tiger1&quot;</span><span class="p">)</span>
+<span class="n">elem_password</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">&quot;password&quot;</span><span class="p">)</span>
+<span class="n">elem_password</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="s2">&quot;tiger1&quot;</span><span class="p">)</span>
+<span class="n">elem_password</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">Keys</span><span class="o">.</span><span class="n">RETURN</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+<p>如果遇到以下错误</p>
+<p><code>selenium.common.exceptions.WebDriverException: Message: 'ChromeDriver executable needs to be available in the path.</code></p>
+<p>解决方法在<a href="http://selenium-python.readthedocs.org/faq.html#how-to-use-chromedriver">http://selenium-python.readthedocs.org/faq.html#how-to-use-chromedriver</a></p>
 
             </div>
         </article>
         <div id="ga-tags">
     
     <span class="ga-tag">
-        <a class="ga-highlight" href="/tag/ubuntu/">#ubuntu</a>
+        <a class="ga-highlight" href="/tag/测试/">#测试</a>
+    </span>
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/tag/python/">#python</a>
     </span>
     
 </div>
@@ -125,14 +123,14 @@
 <section id="ga-content_pager">
 
     <div class="next">
-        <a class="ga-highlight" href="/archives/【C++实现】HeadFirst设计模式之策略模式/">【C++实现】HeadFirst设计模式之策略模式</a>
-        <p class="yue">策略模式定义了算法家族，分别封装起来，让它们之间可以相互替换，此模式让算法的变化独立于使用算法的客户。</p>
+        <a class="ga-highlight" href="/archives/使用Python操作redis遇到的坑/">使用Python操作redis遇到的坑</a>
+        <p class="yue">写在前面</p>
     </div>
 
 
     <div class="prev">
-        <a class="ga-highlight" href="/archives/循环求和中的代码优化/">循环求和中的代码优化</a>
-        <p class="yue">在今天早上嵌入式课上的课前演示中，我提到了循环求和中的优化（其实那只是前一天我网上搜索做准备时无意碰到的）。演示中我举的例程如下：</p>
+        <a class="ga-highlight" href="/archives/Python模拟登录wap版百度贴吧+自动回贴/">Python模拟登录wap版百度贴吧+自动回贴</a>
+        <p class="yue">模拟登录的原理都差不多，大致都是这样：</p>
     </div>
 
 </section>

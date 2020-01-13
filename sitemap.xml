@@ -12,8 +12,85 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-    <loc>/archives/typography/</loc>
-    <lastmod>2019-12-18</lastmod>
+    <loc>/archives/Tornado异步与延迟任务/</loc>
+    <lastmod>2015-05-24</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.5</priority>
+</url>
+
+<url>
+    <loc>/archives/使用Python操作redis遇到的坑/</loc>
+    <lastmod>2015-05-11</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.5</priority>
+</url>
+
+<url>
+    <loc>/archives/Web自动化测试工具——Selenium/</loc>
+    <lastmod>2014-09-18</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.5</priority>
+</url>
+
+<url>
+    <loc>/archives/Python模拟登录wap版百度贴吧+自动回贴/</loc>
+    <lastmod>2014-09-18</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.5</priority>
+</url>
+
+<url>
+    <loc>/archives/Requests模块中持续性的 Cookie 会话/</loc>
+    <lastmod>2014-08-28</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.5</priority>
+</url>
+
+<url>
+    <loc>/archives/placement new的使用及好处/</loc>
+    <lastmod>2014-08-17</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.5</priority>
+</url>
+
+<url>
+    <loc>/archives/在Ubuntu14.04下使用ap-hotspot建立无线热点（AP mode）/</loc>
+    <lastmod>2014-08-15</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.5</priority>
+</url>
+
+<url>
+    <loc>/archives/【C++实现】HeadFirst设计模式之观察者模式/</loc>
+    <lastmod>2014-08-02</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.5</priority>
+</url>
+
+<url>
+    <loc>/archives/Codechef July Challenge 2014部分题解/</loc>
+    <lastmod>2014-07-14</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.5</priority>
+</url>
+
+<url>
+    <loc>/archives/Python爬取京东商品数据/</loc>
+    <lastmod>2014-06-16</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.5</priority>
+</url>
+
+<url>
+    <loc>/archives/sae python中Mysql中文乱码的解决/</loc>
+    <lastmod>2014-06-16</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.5</priority>
+</url>
+
+<url>
+    <loc>/archives/【C++实现】HeadFirst设计模式之策略模式/</loc>
+    <lastmod>2014-06-05</lastmod>
     <changefreq>always</changefreq>
     <priority>0.5</priority>
 </url>
@@ -21,6 +98,20 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
     <loc>/archives/戴尔笔记本win8.1+UEFI下安装Ubuntu14.04过程记录/</loc>
     <lastmod>2014-05-11</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.5</priority>
+</url>
+
+<url>
+    <loc>/archives/循环求和中的代码优化/</loc>
+    <lastmod>2014-05-09</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.5</priority>
+</url>
+
+<url>
+    <loc>/archives/贴吧大召唤术——Python实现提取贴吧页面的用户id/</loc>
+    <lastmod>2014-05-03</lastmod>
     <changefreq>always</changefreq>
     <priority>0.5</priority>
 </url>

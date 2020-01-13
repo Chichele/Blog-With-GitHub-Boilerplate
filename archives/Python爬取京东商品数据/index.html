@@ -1,0 +1,180 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Maverick,Chechele,Galileo,blog" />
+    <meta name="generator" content="Maverick 1.1" />
+    <meta name="template" content="Galileo" />
+    <link rel="alternate" type="application/rss+xml" title="Don't ask me why &raquo; RSS 2.0" href="/feed/index.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Don't ask me why &raquo; ATOM 1.0" href="/feed/atom/index.xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/assets/galileo-e255dd166a.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/assets/ExSearch/ExSearch-182e5a8868.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/assets/katex.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Code&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700&display=swap">
+    <script>
+        var ExSearchConfig = {
+            root: "",
+            api: "https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/15f768e9d733d0eecfd89c30ecc06e00.json"
+        }
+    </script>
+    
+<title>Python爬取京东商品数据 - Don't ask me why</title>
+<meta name="author" content="" />
+<meta name="description" content="对京东某一商品信息页面的HTML代码进行分析，可以发现它的图书产品信息页面都含有这样一段代码（不同类的商品页面有些不同）：" />
+<meta property="og:title" content="Python爬取京东商品数据 - Don't ask me why" />
+<meta property="og:description" content="对京东某一商品信息页面的HTML代码进行分析，可以发现它的图书产品信息页面都含有这样一段代码（不同类的商品页面有些不同）：" />
+<meta property="og:site_name" content="Don't ask me why" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/archives/Python爬取京东商品数据/" />
+<meta property="og:image" content="" />
+<meta property="article:published_time" content="2014-06-16T17:08:41-00.00" />
+<meta name="twitter:title" content="Python爬取京东商品数据 - Don't ask me why" />
+<meta name="twitter:description" content="对京东某一商品信息页面的HTML代码进行分析，可以发现它的图书产品信息页面都含有这样一段代码（不同类的商品页面有些不同）：" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:image" content="" />
+
+
+    
+<meta http-equiv="x-dns-prefetch-control" content="on">
+<link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
+
+    </head>
+    
+    <body>
+        
+        <div class="container">
+            <header id="ga-header">
+                <div first>
+                    <aside id="ga-brand">
+                        <h1 class="brand"><a class="no-style" href="/">Don't ask me why</a></h1>
+                        <p>but time has passed us by</p>
+                    </aside>
+                </div>
+                <div second id="ga-nav">
+                    <nav class="navs">
+                        <ul><li><a class="ga-highlight" href="/" target="_self">首页</a></li><span class="separator">·</span><li><a class="ga-highlight" href="/archives/" target="_self">归档</a></li><span class="separator">·</span><li><a class="ga-highlight" href="/about/" target="_self">关于</a></li><span class="separator">·</span><li><a href="#" target="_self" class="search-form-input ga-highlight">搜索</a></li></ul>
+                    </nav>
+                </div>
+            </header>
+            <div class="wrapper">
+                
+<main>    
+    <section class="ga-section ga-content">
+        <article class="yue">
+            <h1 class="ga-post_title">Python爬取京东商品数据</h1>
+            <span class="ga-post_meta ga-mono">
+                <span></span>
+                <time>
+                    2014-06-16
+                </time>
+                
+                in <a no-style class="category" href="/category/瞎折腾/">
+                    瞎折腾
+                </a>
+                
+                
+            </span>
+            <div class="ga-content_body">
+                <p>对京东某一商品信息页面的HTML代码进行分析，可以发现它的图书产品信息页面都含有这样一段代码（不同类的商品页面有些不同）：</p>
+<div class="highlight"><pre><span></span><span class="nb">window</span><span class="p">.</span><span class="nx">pageConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">compatible</span><span class="o">:</span><span class="kc">true</span><span class="p">,</span><span class="nx">searchType</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span><span class="nx">product</span><span class="o">:</span><span class="p">{</span><span class="s2">&quot;skuid&quot;</span><span class="o">:</span><span class="s2">&quot;11408255&quot;</span><span class="p">,</span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="s2">&quot;\u4f17\u795e\u7684\u536b\u661f\uff1a\u4e2d\u56fd\u7981\u533a&quot;</span><span class="p">,</span><span class="s2">&quot;skuidkey&quot;</span><span class="o">:</span><span class="s2">&quot;0337880E5D0F419E033111D988169617&quot;</span><span class="p">,</span><span class="s2">&quot;href&quot;</span><span class="o">:</span><span class="s2">&quot;http:\/\/item.jd.com\/11408255.html&quot;</span><span class="p">,</span><span class="s2">&quot;src&quot;</span><span class="o">:</span><span class="s2">&quot;g14\/M01\/13\/0F\/rBEhVVMPSugIAAAAAAViPV7x4XAAAJS4gLble8ABWJV204.jpg&quot;</span><span class="p">,</span><span class="s2">&quot;jqimg&quot;</span><span class="o">:</span><span class="s2">&quot;http:\/\/img11.360buyimg.com\/n0\/g14\/M01\/13\/0F\/rBEhVVMPSugIAAAAAAViPV7x4XAAAJS4gLble8ABWJV204.jpg&quot;</span><span class="p">,</span><span class="s2">&quot;wMaprice&quot;</span><span class="o">:</span><span class="s2">&quot;32.00&quot;</span><span class="p">,</span><span class="s2">&quot;wMeprice&quot;</span><span class="o">:</span><span class="s2">&quot;23.40&quot;</span><span class="p">,</span><span class="s2">&quot;cat&quot;</span><span class="o">:</span><span class="p">[</span><span class="mi">1713</span><span class="p">,</span><span class="mi">9340</span><span class="p">,</span><span class="mi">9346</span><span class="p">],</span><span class="s2">&quot;brand&quot;</span><span class="o">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;tips&quot;</span><span class="o">:</span><span class="kc">false</span><span class="p">,</span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span><span class="s2">&quot;n&quot;</span><span class="o">:</span><span class="kc">false</span><span class="p">,</span><span class="s2">&quot;g&quot;</span><span class="o">:</span><span class="kc">false</span><span class="p">}};</span>
+</pre></div>
+<p>显然这就是我们需要的商品信息，Python代码如下：</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">urllib</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11348876</span><span class="p">,</span><span class="mi">11348999</span><span class="p">):</span><span class="c1">#数字代表京东商品编号</span>
+    <span class="n">URL</span><span class="o">=</span><span class="s1">&#39;http://item.jd.com/</span><span class="si">%s</span><span class="s1">.html&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">page</span><span class="o">=</span><span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">URL</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">idx</span><span class="o">=</span><span class="n">page</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;product:&#39;</span><span class="p">)</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">idx</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="n">idx</span><span class="o">+=</span><span class="mi">8</span>
+        <span class="n">res</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;{.+?}&#39;</span><span class="p">,</span><span class="n">page</span><span class="p">[</span><span class="n">idx</span><span class="p">:])</span>    <span class="c1">#用正则表达式匹配</span>
+        <span class="n">text</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>    <span class="c1">#用json读取</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">,</span><span class="si">%s</span><span class="s2">,</span><span class="si">%s</span><span class="s2">,</span><span class="si">%s</span><span class="s2">,</span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">text</span><span class="p">[</span><span class="s1">&#39;skuid&#39;</span><span class="p">],</span><span class="n">text</span><span class="p">[</span><span class="s1">&#39;wMaprice&#39;</span><span class="p">],</span><span class="n">text</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span><span class="n">text</span><span class="p">[</span><span class="s1">&#39;href&#39;</span><span class="p">],</span><span class="n">text</span><span class="p">[</span><span class="s1">&#39;jqimg&#39;</span><span class="p">]))</span>
+</pre></div>
+
+            </div>
+        </article>
+        <div id="ga-tags">
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/tag/python/">#python</a>
+    </span>
+    
+</div>
+    </section>
+
+    
+<section id="ga-content_pager">
+
+    <div class="next">
+        <a class="ga-highlight" href="/archives/Codechef July Challenge 2014部分题解/">Codechef July Challenge 2014部分题解</a>
+        <p class="yue">Dish Owner（并查集）</p>
+    </div>
+
+
+    <div class="prev">
+        <a class="ga-highlight" href="/archives/sae python中Mysql中文乱码的解决/">sae python中Mysql中文乱码的解决</a>
+        <p class="yue">一开始我用的是：</p>
+    </div>
+
+</section>
+
+
+    
+
+</main>
+
+                <footer class="ga-mono" id="ga-footer">
+                    <section>
+                        <span id="ga-uptime"></span>
+                        <span class="brand">Don't ask me why</span>
+                    </section>
+                    <section>
+                        <p class="copyright">
+                            <span>Copyright © 2020 Chichele</span>
+                            <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
+                        </p>
+                        <div class="copyright">
+                            <span class="footer-addon">
+                                
+                            </span>
+                            <nav class="social-links">
+                                <ul><li><a class="no-style" title="GitHub" href="https://github.com/Chichele" target="_blank"><i class="gi gi-github"></i>GitHub</a></li></ul>
+                            </nav>
+                        </div>
+                    </section>
+                    <script>
+                        var site_build_date = "2019-12-18T16:51+08:00"
+                    </script>
+                    <script src="https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/assets/galileo-dc4baa7cf4.js"></script>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <!--katex-->
+    <script defer src="https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/assets/katex.min.js"></script>
+    <script>
+    mathOpts = {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "\\[", right: "\\]", display: true},
+            {left: "$", right: "$", display: false},
+            {left: "\\(", right: "\\)", display: false}
+        ]
+    };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/assets/auto-render.min.js" onload="renderMathInElement(document.body, mathOpts);"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/assets/ExSearch/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/assets/ExSearch/ExSearch-493cb9cd89.js"></script>
+
+    
+    </body>
+</html>

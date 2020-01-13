@@ -23,19 +23,20 @@
         }
     </script>
     
-<title>标签: ubuntu - Don't ask me why</title>
-<meta name="author" content="Chichele" />
-<meta name="description" content="but time has passed us by" />
-<meta property="og:title" content="标签: ubuntu - Don't ask me why" />
-<meta property="og:description" content="but time has passed us by" />
+<title>Python模拟登录wap版百度贴吧+自动回贴 - Don't ask me why</title>
+<meta name="author" content="" />
+<meta name="description" content="模拟登录的原理都差不多，大致都是这样：" />
+<meta property="og:title" content="Python模拟登录wap版百度贴吧+自动回贴 - Don't ask me why" />
+<meta property="og:description" content="模拟登录的原理都差不多，大致都是这样：" />
 <meta property="og:site_name" content="Don't ask me why" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="/tag/ubuntu/" />
-<meta property="og:image" content="Don't ask me why" />
-<meta name="twitter:title" content="标签: ubuntu - Don't ask me why" />
-<meta name="twitter:description" content="but time has passed us by" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/archives/Python模拟登录wap版百度贴吧+自动回贴/" />
+<meta property="og:image" content="" />
+<meta property="article:published_time" content="2014-09-18T23:09:46-00.00" />
+<meta name="twitter:title" content="Python模拟登录wap版百度贴吧+自动回贴 - Don't ask me why" />
+<meta name="twitter:description" content="模拟登录的原理都差不多，大致都是这样：" />
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/logo.png" />
+<meta name="twitter:image" content="" />
 
 
     
@@ -63,34 +64,68 @@
             <div class="wrapper">
                 
 <main>    
-    
+    <section class="ga-section ga-content">
+        <article class="yue">
+            <h1 class="ga-post_title">Python模拟登录wap版百度贴吧+自动回贴</h1>
+            <span class="ga-post_meta ga-mono">
+                <span></span>
+                <time>
+                    2014-09-18
+                </time>
+                
+                in <a no-style class="category" href="/category/瞎折腾/">
+                    瞎折腾
+                </a>
+                
+                
+            </span>
+            <div class="ga-content_body">
+                <p>模拟登录的原理都差不多，大致都是这样：</p>
+<ol>
+<li>打开首页获取相关cookie；</li>
+<li>提交登陆表单（即用户名与密码）；</li>
+<li>确认是否登录成功；</li>
+</ol>
+<p>如果想了解更具体的原理与相关知识，推荐到<a href="http://www.crifan.com/files/doc/docbook/web_scrape_emulate_login/release/html/web_scrape_emulate_login.html">详解抓取网站，模拟登陆，抓取动态网页的原理和实现（Python，C#等）</a>。（不过这一系列博文实在太绕太绕太绕，数十篇文章互相穿插让人头晕眼花，我前后断断续续历时几个月才搞懂并编码测试成功）</p>
+<p>模拟登录的关键点有两个：
+1.使用抓包工具（如chrome开发者控制台）分析表单提交的真实链接与相关get/post参数
+2.编写管理cookie的代码</p>
+<p>对于第一点，在上述链接中已经有足够详细的教程，不再赘述；至于第二点，使用<code>requests</code>模块就可以非常简单完美地解决，它可以保持管理同一会话中的cookie，使用方法在我上一篇博文有提到，相当方便。</p>
+<p>登录成功之后，就差自动回帖了。wap网页比PC网页简单很多，使得很多操作都容易了很多，本次实践中我使用了<code>BeautifulSoup</code>模块来解析网页。</p>
+<p>在这里以post方法提交的表单中常常都会包含一些<code>type="hidden"</code>的元素，在模拟提交的时候不能缺少。</p>
+<hr>
+<h4>结尾语</h4>
+<p>话说当完成一项曾经的难题之后，总是发现没什么详细记录的欲望了。。在这里我大概描述了一下实现的路线，相关代码我放在<a href="https://github.com/tigerstudent">我的Github</a>上了，如果有什么问题或建议欢迎交流！</p>
 
-<section id="ga-archive_list" class="ga-section" data-title="#ubuntu">
-    <ul>
-        
-        <li>
-            <h1><a target="_self" class="ga-highlight" href="/archives/在Ubuntu14.04下使用ap-hotspot建立无线热点（AP mode）/">在Ubuntu14.04下使用ap-hotspot建立无线热点（AP mode）</a></h1>
-            <time class="ga-mono" datetime="2014-08-15T22:36:02-00.00">
-                2014-08-15
-            </time>
-        </li>
-        
-        <li>
-            <h1><a target="_self" class="ga-highlight" href="/archives/戴尔笔记本win8.1+UEFI下安装Ubuntu14.04过程记录/">戴尔笔记本win8.1+UEFI下安装Ubuntu14.04过程记录</a></h1>
-            <time class="ga-mono" datetime="2014-05-11T22:41:59-00.00">
-                2014-05-11
-            </time>
-        </li>
-        
-    </ul>
+            </div>
+        </article>
+        <div id="ga-tags">
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/tag/python/">#python</a>
+    </span>
+    
+</div>
+    </section>
+
+    
+<section id="ga-content_pager">
+
+    <div class="next">
+        <a class="ga-highlight" href="/archives/Web自动化测试工具——Selenium/">Web自动化测试工具——Selenium</a>
+        <p class="yue">在最近的Web课程设计上我接触到了Selenium这款Web自动化测试工具，它可以通过一系列find_element()方法定位到目标元素，对其发送模拟按键操作，使操作自动化。</p>
+    </div>
+
+
+    <div class="prev">
+        <a class="ga-highlight" href="/archives/Requests模块中持续性的 Cookie 会话/">Requests模块中持续性的 Cookie 会话</a>
+        <p class="yue">Requests模块有如下优点：</p>
+    </div>
+
 </section>
 
-<section class="ga-section ga-mono" id="ga-pager">
-    
-    <span>Page 1 of 1</span>
-    
-</section>
 
+    
 
 </main>
 

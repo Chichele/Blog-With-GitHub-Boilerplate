@@ -1,0 +1,232 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Maverick,Chechele,Galileo,blog" />
+    <meta name="generator" content="Maverick 1.1" />
+    <meta name="template" content="Galileo" />
+    <link rel="alternate" type="application/rss+xml" title="Don't ask me why &raquo; RSS 2.0" href="/feed/index.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Don't ask me why &raquo; ATOM 1.0" href="/feed/atom/index.xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/assets/galileo-e255dd166a.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/assets/ExSearch/ExSearch-182e5a8868.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/assets/katex.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Code&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700&display=swap">
+    <script>
+        var ExSearchConfig = {
+            root: "",
+            api: "https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/15f768e9d733d0eecfd89c30ecc06e00.json"
+        }
+    </script>
+    
+<title>循环求和中的代码优化 - Don't ask me why</title>
+<meta name="author" content="" />
+<meta name="description" content="在今天早上嵌入式课上的课前演示中，我提到了循环求和中的优化（其实那只是前一天我网上搜索做准备时无意碰到的）。演示中我举的例程如下：" />
+<meta property="og:title" content="循环求和中的代码优化 - Don't ask me why" />
+<meta property="og:description" content="在今天早上嵌入式课上的课前演示中，我提到了循环求和中的优化（其实那只是前一天我网上搜索做准备时无意碰到的）。演示中我举的例程如下：" />
+<meta property="og:site_name" content="Don't ask me why" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/archives/循环求和中的代码优化/" />
+<meta property="og:image" content="" />
+<meta property="article:published_time" content="2014-05-09T22:42:02-00.00" />
+<meta name="twitter:title" content="循环求和中的代码优化 - Don't ask me why" />
+<meta name="twitter:description" content="在今天早上嵌入式课上的课前演示中，我提到了循环求和中的优化（其实那只是前一天我网上搜索做准备时无意碰到的）。演示中我举的例程如下：" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:image" content="" />
+
+
+    
+<meta http-equiv="x-dns-prefetch-control" content="on">
+<link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
+
+    </head>
+    
+    <body>
+        
+        <div class="container">
+            <header id="ga-header">
+                <div first>
+                    <aside id="ga-brand">
+                        <h1 class="brand"><a class="no-style" href="/">Don't ask me why</a></h1>
+                        <p>but time has passed us by</p>
+                    </aside>
+                </div>
+                <div second id="ga-nav">
+                    <nav class="navs">
+                        <ul><li><a class="ga-highlight" href="/" target="_self">首页</a></li><span class="separator">·</span><li><a class="ga-highlight" href="/archives/" target="_self">归档</a></li><span class="separator">·</span><li><a class="ga-highlight" href="/about/" target="_self">关于</a></li><span class="separator">·</span><li><a href="#" target="_self" class="search-form-input ga-highlight">搜索</a></li></ul>
+                    </nav>
+                </div>
+            </header>
+            <div class="wrapper">
+                
+<main>    
+    <section class="ga-section ga-content">
+        <article class="yue">
+            <h1 class="ga-post_title">循环求和中的代码优化</h1>
+            <span class="ga-post_meta ga-mono">
+                <span></span>
+                <time>
+                    2014-05-09
+                </time>
+                
+                in <a no-style class="category" href="/category/瞎折腾/">
+                    瞎折腾
+                </a>
+                
+                
+            </span>
+            <div class="ga-content_body">
+                <p>在今天早上嵌入式课上的课前演示中，我提到了循环求和中的优化（其实那只是前一天我网上搜索做准备时无意碰到的）。演示中我举的例程如下：</p>
+<div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="mi">100</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">sum</span> <span class="o">+=</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">sum1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sum2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="mi">100</span><span class="p">;</span> <span class="n">i</span> <span class="o">+=</span> <span class="mi">2</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">sum1</span> <span class="o">+=</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="n">sum2</span> <span class="o">+=</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">sum1</span> <span class="o">+</span> <span class="n">sum2</span><span class="p">;</span>
+</pre></div>
+<p>当时在网上看到的结论是，第二种方法更优，原因有二：</p>
+<ul>
+<li>循环体中两个不相关的运算可以得到并行处理，减少运行时间</li>
+<li>循环次数（从汇编的层次上讲就是条件跳转），其次数减少，因为条件跳转只有到最后一刻才知道代码会跳往何处。</li>
+</ul>
+<p>演示完后，被老师问到，第二种方法能得到多大的优化，你测试过这代码吗？</p>
+<p>悻悻地回答，没有。</p>
+<p>于是回来之后我用更大的循环次数去测试验证了一下，代码一如下：</p>
+<div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;windows.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;cstdio&gt;</span><span class="cp"></span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">DWORD</span> <span class="n">start_time</span><span class="p">,</span><span class="n">end_time</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">sum</span><span class="p">,</span><span class="n">i</span><span class="p">;</span>
+
+    <span class="n">start_time</span><span class="o">=</span><span class="n">GetTickCount</span><span class="p">();</span>
+    <span class="n">sum</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">1000000000</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="n">sum</span><span class="o">+=</span><span class="n">i</span><span class="p">;</span>
+    <span class="n">end_time</span><span class="o">=</span><span class="n">GetTickCount</span><span class="p">();</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">end_time</span><span class="o">-</span><span class="n">start_time</span><span class="p">);</span>
+
+    <span class="n">sum</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">sum2</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">sum3</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+    <span class="n">start_time</span><span class="o">=</span><span class="n">GetTickCount</span><span class="p">();</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">1000000000</span><span class="p">;</span><span class="n">i</span><span class="o">+=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">sum2</span><span class="o">+=</span><span class="n">i</span><span class="p">,</span><span class="n">sum3</span><span class="o">+=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+    <span class="n">sum</span><span class="o">=</span><span class="n">sum2</span><span class="o">+</span><span class="n">sum3</span><span class="p">;</span>
+    <span class="n">end_time</span><span class="o">=</span><span class="n">GetTickCount</span><span class="p">();</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">end_time</span><span class="o">-</span><span class="n">start_time</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<p>运行结果：</p>
+
+<pre><code>5594
+3328</code></pre>
+<p>由此可见，第二种方法确实能得到可观的性能优化。那么，现在剩下的问题是，到底是第一个原因起的作用大，还是第二个原因？</p>
+<p>我把第二种方法的代码修改了，代码二如下：</p>
+<div class="highlight"><pre><span></span><span class="n">sum</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+    <span class="n">start_time</span><span class="o">=</span><span class="n">GetTickCount</span><span class="p">();</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">1000000000</span><span class="p">;</span><span class="n">i</span><span class="o">+=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">sum</span><span class="o">+=</span><span class="n">i</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+    <span class="n">end_time</span><span class="o">=</span><span class="n">GetTickCount</span><span class="p">();</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">end_time</span><span class="o">-</span><span class="n">start_time</span><span class="p">);</span>
+</pre></div>
+<p>运行结果：</p>
+
+<pre><code>5422
+2953</code></pre>
+<p>经常多次测试表明，代码二确实比代码一里的第二种方法明显快上一点。因此，我个人感觉其中没有用到并行处理优化。也就是说，<strong>在特定的情况下，通过减少条件跳转次数，可以获得可观的性能优化。</strong></p>
+<p>下面我尝试进行<code>-O</code>编译优化。结果如下：</p>
+<p><figure style="flex: 55.18590998043053" ><img width="564" height="511" src="https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/archives/assets/efe278f17b22b72e3f9d73087f7b0058.png" /></figure></p>
+<p><code>-O1</code>优化居然能减少这么多时间！不过可能是这段代码逻辑太简单了。另外不知道为什么<code>-O2</code>优化后的运行结果不正常。。。有知道原因的童鞋请多多指教！</p>
+
+            </div>
+        </article>
+        <div id="ga-tags">
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/tag/C++/">#C++</a>
+    </span>
+    
+</div>
+    </section>
+
+    
+<section id="ga-content_pager">
+
+    <div class="next">
+        <a class="ga-highlight" href="/archives/戴尔笔记本win8.1+UEFI下安装Ubuntu14.04过程记录/">戴尔笔记本win8.1+UEFI下安装Ubuntu14.04过程记录</a>
+        <p class="yue">瞎扯在前</p>
+    </div>
+
+
+    <div class="prev">
+        <a class="ga-highlight" href="/archives/贴吧大召唤术——Python实现提取贴吧页面的用户id/">贴吧大召唤术——Python实现提取贴吧页面的用户id</a>
+        <p class="yue">前几天就想写一个python脚本实现从百度贴吧任意帖子页面获取该页面上的用户id。</p>
+    </div>
+
+</section>
+
+
+    
+
+</main>
+
+                <footer class="ga-mono" id="ga-footer">
+                    <section>
+                        <span id="ga-uptime"></span>
+                        <span class="brand">Don't ask me why</span>
+                    </section>
+                    <section>
+                        <p class="copyright">
+                            <span>Copyright © 2020 Chichele</span>
+                            <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
+                        </p>
+                        <div class="copyright">
+                            <span class="footer-addon">
+                                
+                            </span>
+                            <nav class="social-links">
+                                <ul><li><a class="no-style" title="GitHub" href="https://github.com/Chichele" target="_blank"><i class="gi gi-github"></i>GitHub</a></li></ul>
+                            </nav>
+                        </div>
+                    </section>
+                    <script>
+                        var site_build_date = "2019-12-18T16:51+08:00"
+                    </script>
+                    <script src="https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/assets/galileo-dc4baa7cf4.js"></script>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <!--katex-->
+    <script defer src="https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/assets/katex.min.js"></script>
+    <script>
+    mathOpts = {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "\\[", right: "\\]", display: true},
+            {left: "$", right: "$", display: false},
+            {left: "\\(", right: "\\)", display: false}
+        ]
+    };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/assets/auto-render.min.js" onload="renderMathInElement(document.body, mathOpts);"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/assets/ExSearch/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/assets/ExSearch/ExSearch-493cb9cd89.js"></script>
+
+    
+    </body>
+</html>

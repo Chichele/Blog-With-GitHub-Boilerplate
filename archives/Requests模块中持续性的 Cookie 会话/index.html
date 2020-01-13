@@ -23,19 +23,20 @@
         }
     </script>
     
-<title>标签: ubuntu - Don't ask me why</title>
-<meta name="author" content="Chichele" />
-<meta name="description" content="but time has passed us by" />
-<meta property="og:title" content="标签: ubuntu - Don't ask me why" />
-<meta property="og:description" content="but time has passed us by" />
+<title>Requests模块中持续性的 Cookie 会话 - Don't ask me why</title>
+<meta name="author" content="" />
+<meta name="description" content="Requests模块有如下优点：" />
+<meta property="og:title" content="Requests模块中持续性的 Cookie 会话 - Don't ask me why" />
+<meta property="og:description" content="Requests模块有如下优点：" />
 <meta property="og:site_name" content="Don't ask me why" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="/tag/ubuntu/" />
-<meta property="og:image" content="Don't ask me why" />
-<meta name="twitter:title" content="标签: ubuntu - Don't ask me why" />
-<meta name="twitter:description" content="but time has passed us by" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/archives/Requests模块中持续性的 Cookie 会话/" />
+<meta property="og:image" content="" />
+<meta property="article:published_time" content="2014-08-28T11:41:38-00.00" />
+<meta name="twitter:title" content="Requests模块中持续性的 Cookie 会话 - Don't ask me why" />
+<meta name="twitter:description" content="Requests模块有如下优点：" />
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/logo.png" />
+<meta name="twitter:image" content="" />
 
 
     
@@ -63,34 +64,78 @@
             <div class="wrapper">
                 
 <main>    
-    
+    <section class="ga-section ga-content">
+        <article class="yue">
+            <h1 class="ga-post_title">Requests模块中持续性的 Cookie 会话</h1>
+            <span class="ga-post_meta ga-mono">
+                <span></span>
+                <time>
+                    2014-08-28
+                </time>
+                
+                in <a no-style class="category" href="/category/Tech/">
+                    Tech
+                </a>
+                
+                
+            </span>
+            <div class="ga-content_body">
+                <p>Requests模块有如下优点：</p>
+<ul>
+<li>国际化域名和 URLs</li>
+<li>Keep-Alive &amp; 连接池</li>
+<li>持续性的 Cookie 会话</li>
+<li>类浏览器式的 SSL 加密认证</li>
+<li>基本/精简式的身份认证</li>
+<li>优雅的键/&#20540; Cookies</li>
+<li>自动解压</li>
+<li>Unicode 编码的响应主体</li>
+<li>多段文件上传</li>
+<li>连接超时</li>
+<li>支持 .netrc</li>
+<li>适用于 Python 2.6—3.3</li>
+<li>安全的线程使用</li>
+</ul>
+<p>其中最吸引我的就是“<strong>持续性的 Cookie 会话</strong>”功能，它接管了Cookie管理方面的工作，使我们在实现模拟登录时的工作量大大减少。下面我介绍一下如何使用这个特性：
+首先建立一个会话：</p>
+<div class="highlight"><pre><span></span><span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">session</span><span class="p">()</span>
+</pre></div>
+<p>在这之后，如果是get方式打开链接，例如百度，则是：</p>
+<div class="highlight"><pre><span></span><span class="n">page</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;http://www.baidu.com&quot;</span><span class="p">)</span>
+</pre></div>
+<p>这里的page变量是一个<code>Response</code>对象，page.content即是这个get请求返回的HTML内容。这时session自动将百度返回的Cookie给记录下来。</p>
+<p>post请求同样类似。url，postData，headers，proxy等都可以作为参数，非常方便！</p>
+<p>Requests模块本身就是为了易用而生，它的文档也非常简洁。</p>
 
-<section id="ga-archive_list" class="ga-section" data-title="#ubuntu">
-    <ul>
-        
-        <li>
-            <h1><a target="_self" class="ga-highlight" href="/archives/在Ubuntu14.04下使用ap-hotspot建立无线热点（AP mode）/">在Ubuntu14.04下使用ap-hotspot建立无线热点（AP mode）</a></h1>
-            <time class="ga-mono" datetime="2014-08-15T22:36:02-00.00">
-                2014-08-15
-            </time>
-        </li>
-        
-        <li>
-            <h1><a target="_self" class="ga-highlight" href="/archives/戴尔笔记本win8.1+UEFI下安装Ubuntu14.04过程记录/">戴尔笔记本win8.1+UEFI下安装Ubuntu14.04过程记录</a></h1>
-            <time class="ga-mono" datetime="2014-05-11T22:41:59-00.00">
-                2014-05-11
-            </time>
-        </li>
-        
-    </ul>
+            </div>
+        </article>
+        <div id="ga-tags">
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/tag/python/">#python</a>
+    </span>
+    
+</div>
+    </section>
+
+    
+<section id="ga-content_pager">
+
+    <div class="next">
+        <a class="ga-highlight" href="/archives/Python模拟登录wap版百度贴吧+自动回贴/">Python模拟登录wap版百度贴吧+自动回贴</a>
+        <p class="yue">模拟登录的原理都差不多，大致都是这样：</p>
+    </div>
+
+
+    <div class="prev">
+        <a class="ga-highlight" href="/archives/placement new的使用及好处/">placement new的使用及好处</a>
+        <p class="yue">详细的介绍可以看这几篇文章：</p>
+    </div>
+
 </section>
 
-<section class="ga-section ga-mono" id="ga-pager">
-    
-    <span>Page 1 of 1</span>
-    
-</section>
 
+    
 
 </main>
 

@@ -19,7 +19,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/25b1ff0bcb5f0495d2d90c2813cb03e2.json"
+            api: "https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/15f768e9d733d0eecfd89c30ecc06e00.json"
         }
     </script>
     
@@ -70,14 +70,14 @@
         
         <li>
             <article class="yue">
-                <h1>Hello World!</h1>
+                <h1>Tornado异步与延迟任务</h1>
                 
-                    <blockquote>这是一篇示例文章，在这里你可以看到常用页面元素的显示效果。</blockquote>
+                    <blockquote>最近一直在研究Tornado异步操作，然而一番研究后发现要使一个函数异步化的最好方法就是采用相关异步库，但目前很多功能强大的库都不在此列。经过一番查找文档和搜索示范，终于发现了ThreadPoolExecutor模块和run_on_executor装饰器。用法就是建立线程池，用run_on_executor装饰的函数即运行在其中线程中，从而从主线程中分离出来，达到异步的目的。</blockquote>
                 
                 <footer>
-                    <span class="ga-read_more"><a class="ga-highlight" href="/archives/typography/">阅读全文</a></span>
+                    <span class="ga-read_more"><a class="ga-highlight" href="/archives/Tornado异步与延迟任务/">阅读全文</a></span>
                     <time class="ga-mono">
-                        2019-12-18
+                        2015-05-24
                     </time>
                 </footer>
             </article>
@@ -85,14 +85,134 @@
         
         <li>
             <article class="yue">
-                <h1>戴尔笔记本win8.1+UEFI下安装Ubuntu14.04过程记录</h1>
+                <h1>使用Python操作redis遇到的坑</h1>
                 
-                    <blockquote>瞎扯在前</blockquote>
+                    <blockquote>写在前面</blockquote>
                 
                 <footer>
-                    <span class="ga-read_more"><a class="ga-highlight" href="/archives/戴尔笔记本win8.1+UEFI下安装Ubuntu14.04过程记录/">阅读全文</a></span>
+                    <span class="ga-read_more"><a class="ga-highlight" href="/archives/使用Python操作redis遇到的坑/">阅读全文</a></span>
                     <time class="ga-mono">
-                        2014-05-11
+                        2015-05-11
+                    </time>
+                </footer>
+            </article>
+        </li>
+        
+        <li>
+            <article class="yue">
+                <h1>Web自动化测试工具——Selenium</h1>
+                
+                    <blockquote>在最近的Web课程设计上我接触到了Selenium这款Web自动化测试工具，它可以通过一系列find_element()方法定位到目标元素，对其发送模拟按键操作，使操作自动化。</blockquote>
+                
+                <footer>
+                    <span class="ga-read_more"><a class="ga-highlight" href="/archives/Web自动化测试工具——Selenium/">阅读全文</a></span>
+                    <time class="ga-mono">
+                        2014-09-18
+                    </time>
+                </footer>
+            </article>
+        </li>
+        
+        <li>
+            <article class="yue">
+                <h1>Python模拟登录wap版百度贴吧+自动回贴</h1>
+                
+                    <blockquote>模拟登录的原理都差不多，大致都是这样：</blockquote>
+                
+                <footer>
+                    <span class="ga-read_more"><a class="ga-highlight" href="/archives/Python模拟登录wap版百度贴吧+自动回贴/">阅读全文</a></span>
+                    <time class="ga-mono">
+                        2014-09-18
+                    </time>
+                </footer>
+            </article>
+        </li>
+        
+        <li>
+            <article class="yue">
+                <h1>Requests模块中持续性的 Cookie 会话</h1>
+                
+                    <blockquote>Requests模块有如下优点：</blockquote>
+                
+                <footer>
+                    <span class="ga-read_more"><a class="ga-highlight" href="/archives/Requests模块中持续性的 Cookie 会话/">阅读全文</a></span>
+                    <time class="ga-mono">
+                        2014-08-28
+                    </time>
+                </footer>
+            </article>
+        </li>
+        
+        <li>
+            <article class="yue">
+                <h1>placement new的使用及好处</h1>
+                
+                    <blockquote>详细的介绍可以看这几篇文章：</blockquote>
+                
+                <footer>
+                    <span class="ga-read_more"><a class="ga-highlight" href="/archives/placement new的使用及好处/">阅读全文</a></span>
+                    <time class="ga-mono">
+                        2014-08-17
+                    </time>
+                </footer>
+            </article>
+        </li>
+        
+        <li>
+            <article class="yue">
+                <h1>在Ubuntu14.04下使用ap-hotspot建立无线热点（AP mode）</h1>
+                
+                    <blockquote>从https://launchpad.net/~nilarimogard/+archive/ubuntu/webupd8/+packages 下载最新版ap-hotspot并安装，我使用的是ap-hotspot - 0.3.1-1~webupd8~0。终端下执行sudo ap-hotspot configure</blockquote>
+                
+                <footer>
+                    <span class="ga-read_more"><a class="ga-highlight" href="/archives/在Ubuntu14.04下使用ap-hotspot建立无线热点（AP mode）/">阅读全文</a></span>
+                    <time class="ga-mono">
+                        2014-08-15
+                    </time>
+                </footer>
+            </article>
+        </li>
+        
+        <li>
+            <article class="yue">
+                <h1>【C++实现】HeadFirst设计模式之观察者模式</h1>
+                
+                    <blockquote>观察者模式定义了对象之间的一对多依赖，这样一来，当一个对象改变状态时，它的所有依赖者都会收到通知并自动更新。</blockquote>
+                
+                <footer>
+                    <span class="ga-read_more"><a class="ga-highlight" href="/archives/【C++实现】HeadFirst设计模式之观察者模式/">阅读全文</a></span>
+                    <time class="ga-mono">
+                        2014-08-02
+                    </time>
+                </footer>
+            </article>
+        </li>
+        
+        <li>
+            <article class="yue">
+                <h1>Codechef July Challenge 2014部分题解</h1>
+                
+                    <blockquote>Dish Owner（并查集）</blockquote>
+                
+                <footer>
+                    <span class="ga-read_more"><a class="ga-highlight" href="/archives/Codechef July Challenge 2014部分题解/">阅读全文</a></span>
+                    <time class="ga-mono">
+                        2014-07-14
+                    </time>
+                </footer>
+            </article>
+        </li>
+        
+        <li>
+            <article class="yue">
+                <h1>Python爬取京东商品数据</h1>
+                
+                    <blockquote>对京东某一商品信息页面的HTML代码进行分析，可以发现它的图书产品信息页面都含有这样一段代码（不同类的商品页面有些不同）：</blockquote>
+                
+                <footer>
+                    <span class="ga-read_more"><a class="ga-highlight" href="/archives/Python爬取京东商品数据/">阅读全文</a></span>
+                    <time class="ga-mono">
+                        2014-06-16
                     </time>
                 </footer>
             </article>
@@ -103,7 +223,9 @@
 
 <section class="ga-section ga-mono" id="ga-pager">
     
-    <span>Page 1 of 1</span>
+    <span>Page 1 of 2</span>
+    
+        <a next class="ga-highlight" href="/page/2/">Next</a>
     
 </section>
 
@@ -112,10 +234,6 @@
         
         <li>
             <a class="ga-highlight" target="_blank" href="https://github.com/AlanDecode/Maverick">Maverick</a>：🏄‍ Go My Own Way.
-        </li>
-        
-        <li>
-            <a class="ga-highlight" target="_blank" href="https://Chichele.life">Don't ask me why</a>：Chichele的主页。
         </li>
         
     </ul>
