@@ -5,21 +5,21 @@ xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitem
 xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">	
 
 <url>
-    <loc>/Blog-With-GitHub-Boilerplate/about/</loc>
+    <loc>/about/</loc>
     <lastmod>2017-06-28</lastmod>
     <changefreq>always</changefreq>
     <priority>0.8</priority>
 </url>
 
 <url>
-    <loc>/Blog-With-GitHub-Boilerplate/archives/typography/</loc>
+    <loc>/archives/typography/</loc>
     <lastmod>2019-12-18</lastmod>
     <changefreq>always</changefreq>
     <priority>0.5</priority>
 </url>
 
 <url>
-    <loc>/Blog-With-GitHub-Boilerplate/archives/戴尔笔记本win8.1+UEFI下安装Ubuntu14.04过程记录/</loc>
+    <loc>/archives/戴尔笔记本win8.1+UEFI下安装Ubuntu14.04过程记录/</loc>
     <lastmod>2014-05-11</lastmod>
     <changefreq>always</changefreq>
     <priority>0.5</priority>
