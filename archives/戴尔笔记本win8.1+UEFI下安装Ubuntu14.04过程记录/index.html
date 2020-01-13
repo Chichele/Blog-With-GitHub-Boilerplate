@@ -23,19 +23,20 @@
         }
     </script>
     
-<title>Don't ask me why</title>
-<meta name="author" content="Chichele" />
-<meta name="description" content="time has passed us by" />
-<meta property="og:title" content="Don't ask me why" />
-<meta property="og:description" content="time has passed us by" />
+<title>戴尔笔记本win8.1+UEFI下安装Ubuntu14.04过程记录 - Don't ask me why</title>
+<meta name="author" content="" />
+<meta name="description" content="瞎扯在前" />
+<meta property="og:title" content="戴尔笔记本win8.1+UEFI下安装Ubuntu14.04过程记录 - Don't ask me why" />
+<meta property="og:description" content="瞎扯在前" />
 <meta property="og:site_name" content="Don't ask me why" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="/Blog-With-GitHub-Boilerplate/" />
-<meta property="og:image" content="Don't ask me why" />
-<meta name="twitter:title" content="Don't ask me why" />
-<meta name="twitter:description" content="time has passed us by" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/Blog-With-GitHub-Boilerplate/archives/戴尔笔记本win8.1+UEFI下安装Ubuntu14.04过程记录/" />
+<meta property="og:image" content="" />
+<meta property="article:published_time" content="2014-05-11T22:41:59-00.00" />
+<meta name="twitter:title" content="戴尔笔记本win8.1+UEFI下安装Ubuntu14.04过程记录 - Don't ask me why" />
+<meta name="twitter:description" content="瞎扯在前" />
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:image" content="/Blog-With-GitHub-Boilerplate/logo.png" />
+<meta name="twitter:image" content="" />
 
 
     
@@ -63,64 +64,81 @@
             <div class="wrapper">
                 
 <main>    
-    
+    <section class="ga-section ga-content">
+        <article class="yue">
+            <h1 class="ga-post_title">戴尔笔记本win8.1+UEFI下安装Ubuntu14.04过程记录</h1>
+            <span class="ga-post_meta ga-mono">
+                <span></span>
+                <time>
+                    2014-05-11
+                </time>
+                
+                in <a no-style class="category" href="/Blog-With-GitHub-Boilerplate/category/默认分类/">
+                    默认分类
+                </a>
+                
+                
+            </span>
+            <div class="ga-content_body">
+                <h2>瞎扯在前</h2>
+<hr>
+<p>笔记本刚买不久就想装ubuntu来着，但结果发现BIOS启动方式为UEFI，网上一搜索发现跟以前的双系统安装方法不一样，看具体教程感觉相当复杂，而且也有点担心折腾跪了这新本本所以一直没有动手。但昨天又心血来潮，看了几个教程后于是决定开搞！虽然中间不是很顺利，但最后结果发现也没有多复杂。</p>
+<blockquote><p>环境：我的笔记本型号是戴尔Insprion 14R-5437,系统为原装Win8.1，BIOS启动方式为UEFI。用事先制作的启动U盘，安装的是Ubuntu14.04 64位。</p>
+</blockquote>
+<p><strong>本文不是完整教程，所以建议参阅结合网上别的教程来操作。</strong></p>
+<h2>过程</h2>
+<hr>
+<ol>
+<li><p>在安装步骤开始前，当然得先分出一部分空闲空间。建议是从硬盘上最后一个分区分割出足够的空间，不用分区格式化，留着它空白就行。这里可以使用分区助手解决。</p>
+</li>
+<li><p>首先当然得到BIOS设置下关闭罪恶之源——<strong>secure boot</strong>。但是每个机型的BIOS设置都不相同，所以自己发挥吧。</p>
+</li>
+<li><p>重启电脑按F12进入启动设备选择。我选的是UEFI方式启动的U盘。</p>
+</li>
+<li><p>进入安装程序后，一路直走到达安装方式的选择画面（类似下图，仅供参考）。我到达这画面时，它并没有检测出我硬盘上的win8.1来，所以我选择了最后一项，“其他选项”。
+<figure style="flex: 58.58585858585859" ><img width="580" height="495" src="/Blog-With-GitHub-Boilerplate/archives/assets/12e316a855020ed174ab97f886b979b6.png" /></figure></p>
+</li>
+<li><p>分配空间。主要有两部分：a）点+，然后选大小（记得留swap的空间），选主分区，ext4格式，从起始点开始，选挂载到 / ，这空间就代表以后ubuntu系统能使用的空间大小。b）剩下的空间（4G-8G，一般不小于你的内存大小，步骤类&#20284;上面），新建一个swap分区：选大小，选逻辑分区，从起始点开始，挂载到swap。这里 / 下包含了/boot，/home，/opt等等，也有人为这几个单独建立分区也是可以的，不过我建议等你懂了之后下次再试吧。在此页面上你应该能找到一个efi分区，它就是UEFI的启动文件存放的地方。</p>
+</li>
+<li><p>完成以上步骤就可以开始安装了，nothing more。</p>
+</li>
+<li>完成ubuntu的安装后，重启电脑，能看到双系统选择画面，就代表双系统安装成功了。</li>
+</ol>
+<h2>结束语</h2>
+<hr>
+<p>一开始我是用<code>ubuntu12.04.2</code> 64位来尝试的，但在第四步分配完空间进入下一步之后总是提示什么无法安装到/target。后来下了14.04才成功了。</p>
+<p>以上是我亲测的安装过程，不代表别的机型也能按此成功，不过程序猿那颗敢于折腾的心不能丢啊</p>
+<p>ps:话说回来，以前都是在低配置的机器上玩ubuntu，这次在新本子上运行真心流畅舒服!</p>
 
-<section id="ga-post_list" class="ga-section" data-title="Posts">
-    <ul>
-        
-        <li>
-            <article class="yue">
-                <h1>Hello World!</h1>
-                
-                    <blockquote>这是一篇示例文章，在这里你可以看到常用页面元素的显示效果。</blockquote>
-                
-                <footer>
-                    <span class="ga-read_more"><a class="ga-highlight" href="/Blog-With-GitHub-Boilerplate/archives/typography/">阅读全文</a></span>
-                    <time class="ga-mono">
-                        2019-12-18
-                    </time>
-                </footer>
-            </article>
-        </li>
-        
-        <li>
-            <article class="yue">
-                <h1>戴尔笔记本win8.1+UEFI下安装Ubuntu14.04过程记录</h1>
-                
-                    <blockquote>瞎扯在前</blockquote>
-                
-                <footer>
-                    <span class="ga-read_more"><a class="ga-highlight" href="/Blog-With-GitHub-Boilerplate/archives/戴尔笔记本win8.1+UEFI下安装Ubuntu14.04过程记录/">阅读全文</a></span>
-                    <time class="ga-mono">
-                        2014-05-11
-                    </time>
-                </footer>
-            </article>
-        </li>
-        
-    </ul>
+            </div>
+        </article>
+        <div id="ga-tags">
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/Blog-With-GitHub-Boilerplate/tag/ubuntu/">#ubuntu</a>
+    </span>
+    
+</div>
+    </section>
+
+    
+<section id="ga-content_pager">
+
+    <div class="next">
+        <a class="ga-highlight" href="/Blog-With-GitHub-Boilerplate/archives/typography/">Hello World!</a>
+        <p class="yue">这是一篇示例文章，在这里你可以看到常用页面元素的显示效果。</p>
+    </div>
+
+
+    <div class="prev">
+        <h3>没有了</h3>
+        <p class="yue">这是最旧的文章</p>
+    </div>
+
 </section>
 
-<section class="ga-section ga-mono" id="ga-pager">
-    
-    <span>Page 1 of 1</span>
-    
-</section>
 
-<section id="ga-external_links" class="ga-section" data-title="Links">
-    <ul>
-        
-        <li>
-            <a class="ga-highlight" target="_blank" href="https://github.com/AlanDecode/Maverick">Maverick</a>：🏄‍ Go My Own Way.
-        </li>
-        
-        <li>
-            <a class="ga-highlight" target="_blank" href="https://Chichele.life">Don't ask me why</a>：Chichele的主页。
-        </li>
-        
-    </ul>
-</section>
-
+    
 
 </main>
 
