@@ -78,6 +78,10 @@
                 </a>
                 
                 
+                <span class="leancloud_visitors" 
+                    id="/archives/Tornado异步与延迟任务/" 
+                    data-flag-title="Tornado异步与延迟任务"> · <i class="leancloud-visitors-count"></i> Views</span>
+                
             </span>
             <div class="ga-content_body">
                 <p>最近一直在研究Tornado异步操作，然而一番研究后发现要使一个函数异步化的最好方法就是采用相关异步库，但目前很多功能强大的库都不在此列。经过一番查找文档和搜索示范，终于发现了<code>ThreadPoolExecutor</code>模块和<code>run_on_executor</code>装饰器。用法就是建立线程池，用<code>run_on_executor</code>装饰的函数即运行在其中线程中，从而从主线程中分离出来，达到异步的目的。
@@ -159,7 +163,7 @@ It is safe to call this method from any thread at any time, except from a signal
     
         <script>
             var initValine = function () {
-                new Valine({"enable": true, "el": "#vcomments", "appId": "sOrecO94dj6mt3xv8WKJiyRU-gzGzoHsz", "appKey": "AMysgqiml5FAJ6zjxUvpGm3N"});
+                new Valine({"enable": true, "el": "#vcomments", "appId": "sOrecO94dj6mt3xv8WKJiyRU-gzGzoHsz", "appKey": "AMysgqiml5FAJ6zjxUvpGm3N", "visitor": true, "recordIP": true});
             }
         </script>
         <script defer src='https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js' onload="initValine()"></script>
