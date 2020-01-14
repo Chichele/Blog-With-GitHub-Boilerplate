@@ -60,7 +60,12 @@ social_links = [
         "icon": "gi gi-github"
     }
 ]
-
+valine = {
+    "enable": True,
+    "el": '#vcomments',
+    "appId": "sOrecO94dj6mt3xv8WKJiyRU-gzGzoHsz",
+    "appKey": "AMysgqiml5FAJ6zjxUvpGm3N",
+}
 head_addon = r'''
 <meta http-equiv="x-dns-prefetch-control" content="on">
 <link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
