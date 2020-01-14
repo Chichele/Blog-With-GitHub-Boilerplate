@@ -65,6 +65,8 @@ valine = {
     "el": '#vcomments',
     "appId": "sOrecO94dj6mt3xv8WKJiyRU-gzGzoHsz",
     "appKey": "AMysgqiml5FAJ6zjxUvpGm3N",
+    "visitor": True,
+    "recordIP": True
 }
 head_addon = r'''
 <meta http-equiv="x-dns-prefetch-control" content="on">
