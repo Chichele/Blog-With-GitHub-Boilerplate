@@ -63,7 +63,7 @@ social_links = [
 valine = {
     "enable": True,
     "el": '#vcomments',
-    "notify": True, 
+    "notify": False, 
     "verify": True, 
     "appId": "sOrecO94dj6mt3xv8WKJiyRU-gzGzoHsz",
     "appKey": "AMysgqiml5FAJ6zjxUvpGm3N",
