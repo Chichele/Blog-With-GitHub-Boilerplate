@@ -12,6 +12,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+    <loc>/archives/自动保存文件为UTF-8编码格式/</loc>
+    <lastmod>2020-02-23</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.5</priority>
+</url>
+
+<url>
     <loc>/archives/Tornado异步与延迟任务/</loc>
     <lastmod>2015-05-24</lastmod>
     <changefreq>always</changefreq>
