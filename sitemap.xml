@@ -12,6 +12,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+    <loc>/archives/opus音频压缩的Python实现/</loc>
+    <lastmod>2020-08-30</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.5</priority>
+</url>
+
+<url>
     <loc>/archives/自动保存文件为UTF-8编码格式/</loc>
     <lastmod>2020-02-23</lastmod>
     <changefreq>always</changefreq>

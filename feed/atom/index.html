@@ -1,203 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>/</id><title>Don't ask me why</title><updated>2020-02-22T16:38:08.956614+08:06</updated><author><name>Chichele</name></author><link href="/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/logo.png</logo><subtitle>but time has passed us by</subtitle><entry><id>/archives/Codechef July Challenge 2014部分题解/</id><title>Codechef July Challenge 2014部分题解</title><updated>2020-02-22T16:38:08.956951+00:00</updated><content>&lt;h1&gt;Dish Owner（并查集）&lt;/h1&gt;
-&lt;p&gt;链接：&lt;a href="http://www.codechef.com/JULY14/problems/DISHOWN/"&gt;http://www.codechef.com/JULY14/problems/DISHOWN/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;题意分析：本题主要操作就是给出0 x y时，拥有第x道菜的厨师与拥有第y道菜的厨师pk，谁拥有的所有菜的其中一道菜（不一定是x或y）的分值比较高谁就获胜，并赢得loser的所有菜。即比较的是每个人分值最高的菜，所以对于非loser的人来说，他的分值最高的菜是不变的。综合题意用并查集易解。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;lt;cstdio&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
-
-&lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;Maxn&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;10004&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;To&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;Maxn&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;val&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;Maxn&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-
-&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="nf"&gt;_find&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;To&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;!=&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-        &lt;span class="n"&gt;To&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;_find&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;To&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;]);&lt;/span&gt;     &lt;span class="c1"&gt;//路径压缩&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;To&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-
-&lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;_merge&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-    &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;fx&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;_find&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-    &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;fy&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;_find&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-    &lt;span class="n"&gt;To&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;fy&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;fx&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-
-&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;T&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="n"&gt;scanf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;%d&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;T&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-    &lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;T&lt;/span&gt;&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-        &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        &lt;span class="n"&gt;scanf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;%d&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;=&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-            &lt;span class="n"&gt;scanf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;%d&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;val&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]);&lt;/span&gt;
-            &lt;span class="n"&gt;To&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        &lt;span class="p"&gt;}&lt;/span&gt;
-        &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;query&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        &lt;span class="n"&gt;scanf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;%d&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;query&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;query&lt;/span&gt;&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-            &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;op&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            &lt;span class="n"&gt;scanf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;%d&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;op&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-            &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;op&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-                &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-                &lt;span class="n"&gt;scanf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;%d%d&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-                &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;fx&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;_find&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;    &lt;span class="c1"&gt;//获得x，y的父节点&lt;/span&gt;
-                &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;fy&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;_find&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-                &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fx&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="n"&gt;fy&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-                    &lt;span class="n"&gt;puts&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Invalid query!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-                &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
-                    &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;val&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;fx&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;val&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;fy&lt;/span&gt;&lt;span class="p"&gt;]){&lt;/span&gt;
-                        &lt;span class="n"&gt;_merge&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-                    &lt;span class="p"&gt;}&lt;/span&gt;
-                    &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;val&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;fx&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;val&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;fy&lt;/span&gt;&lt;span class="p"&gt;]){&lt;/span&gt;
-                        &lt;span class="n"&gt;_merge&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-                    &lt;span class="p"&gt;}&lt;/span&gt;
-                &lt;span class="p"&gt;}&lt;/span&gt;
-            &lt;span class="p"&gt;}&lt;/span&gt;
-            &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
-                &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-                &lt;span class="n"&gt;scanf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;%d&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-                &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;%d&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;_find&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
-            &lt;span class="p"&gt;}&lt;/span&gt;
-        &lt;span class="p"&gt;}&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h1&gt;Garden Game&lt;/h1&gt;
-&lt;p&gt;链接：&lt;a href="http://www.codechef.com/JULY14/problems/SGARDEN"&gt;http://www.codechef.com/JULY14/problems/SGARDEN&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;题意分析：每响哨一次，处在位置i的人就移动到位置A[i]，其中A[i]是不重复的。易知经过有限次响哨后，必定能够恢复到初始态；其中会出现多个互不相关的循环，求出每个循环的人数，计算其最小公倍数即可。注意结果会超过int的范围。&lt;/p&gt;
-&lt;p&gt;Python版：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;#coding:utf8&lt;/span&gt;
-&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;gcd&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;  &lt;span class="c1"&gt;#计算a，b的最大公约数&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;gcd&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-
-&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;fun&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-    &lt;span class="n"&gt;_gcd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;gcd&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="n"&gt;product&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="n"&gt;_gcd&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;   &lt;span class="c1"&gt;#用//运算符保证结果是整数&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;product&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-&lt;span class="n"&gt;T&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;input&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
-&lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;T&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-    &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;input&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
-    &lt;span class="n"&gt;num&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-    &lt;span class="n"&gt;vis&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-    &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;input&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
-        &lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-        &lt;span class="n"&gt;vis&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="n"&gt;div&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
-    &lt;span class="n"&gt;st&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
-    &lt;span class="c1"&gt;#计算每个循环的人数&lt;/span&gt;
-    &lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;st&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-        &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vis&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;st&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-            &lt;span class="n"&gt;mark&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;st&lt;/span&gt;
-            &lt;span class="n"&gt;vis&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;st&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
-            &lt;span class="n"&gt;cnt&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
-            &lt;span class="n"&gt;nx&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;st&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-            &lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;mark&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="n"&gt;nx&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-                &lt;span class="n"&gt;vis&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;nx&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
-                &lt;span class="n"&gt;nx&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;nx&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-                &lt;span class="n"&gt;cnt&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
-            &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cnt&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;div&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; 
-                &lt;span class="n"&gt;div&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cnt&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-        &lt;span class="n"&gt;st&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
-    &lt;span class="n"&gt;ans&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
-    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;each&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;div&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-        &lt;span class="n"&gt;ans&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;fun&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ans&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;each&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ans&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="mi"&gt;1000000007&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-    &lt;span class="n"&gt;T&lt;/span&gt; &lt;span class="o"&gt;-=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;C++版：&lt;/p&gt;
-&lt;p&gt;由于中间运算结果甚至会超出64位整形的范围，于是我采用了因数分解的方法。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;lt;cstdio&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
-&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;lt;cstring&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
-&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;lt;set&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
-&lt;span class="k"&gt;using&lt;/span&gt; &lt;span class="k"&gt;namespace&lt;/span&gt; &lt;span class="n"&gt;std&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-
-&lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;Maxn&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;100005&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;MOD&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1000000007&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;Maxn&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-&lt;span class="kt"&gt;bool&lt;/span&gt; &lt;span class="n"&gt;vis&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;Maxn&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;prime&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;10000&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="n"&gt;primecount&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;totalcount&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;10000&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-
-&lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;getprime&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;
-    &lt;span class="n"&gt;memset&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vis&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="k"&gt;sizeof&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vis&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
-    &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="mi"&gt;100000&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-        &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;vis&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]){&lt;/span&gt;
-            &lt;span class="n"&gt;prime&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;primecount&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            &lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="mi"&gt;100000&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="o"&gt;+=&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-                &lt;span class="n"&gt;vis&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            &lt;span class="p"&gt;}&lt;/span&gt;
-        &lt;span class="p"&gt;}&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;getdivsor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;param&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-    &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;param&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;cnt&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="n"&gt;prime&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;=&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;primecount&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-        &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;prime&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-            &lt;span class="n"&gt;cnt&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            &lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;prime&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-                &lt;span class="n"&gt;cnt&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-                &lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="o"&gt;/=&lt;/span&gt;&lt;span class="n"&gt;prime&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-            &lt;span class="p"&gt;}&lt;/span&gt;
-            &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;totalcount&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;cnt&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-                &lt;span class="n"&gt;totalcount&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;cnt&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        &lt;span class="p"&gt;}&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="n"&gt;getprime&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="c1"&gt;//计算出10万内的所有质数&lt;/span&gt;
-    &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;T&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="n"&gt;scanf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;%d&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;T&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-    &lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;T&lt;/span&gt;&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-        &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        &lt;span class="n"&gt;scanf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;%d&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;=&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-            &lt;span class="n"&gt;scanf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;%d&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]);&lt;/span&gt;
-        &lt;span class="p"&gt;}&lt;/span&gt;
-        &lt;span class="n"&gt;memset&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vis&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="k"&gt;sizeof&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vis&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
-        &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;st&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;nx&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;cnt&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;mark&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        &lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;div&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        &lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;st&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;=&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-            &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vis&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;st&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-                &lt;span class="n"&gt;mark&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;st&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-                &lt;span class="n"&gt;vis&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;st&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-                &lt;span class="n"&gt;cnt&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-                &lt;span class="n"&gt;nx&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;st&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-                &lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;mark&lt;/span&gt;&lt;span class="o"&gt;!=&lt;/span&gt;&lt;span class="n"&gt;nx&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-                    &lt;span class="n"&gt;vis&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;nx&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-                    &lt;span class="n"&gt;nx&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;nx&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-                    &lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="n"&gt;cnt&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-                &lt;span class="p"&gt;}&lt;/span&gt;
-                &lt;span class="n"&gt;div&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;insert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cnt&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-            &lt;span class="p"&gt;}&lt;/span&gt;
-            &lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="n"&gt;st&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        &lt;span class="p"&gt;}&lt;/span&gt;
-        &lt;span class="kt"&gt;long&lt;/span&gt; &lt;span class="kt"&gt;long&lt;/span&gt; &lt;span class="n"&gt;ans&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        &lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;::&lt;/span&gt;&lt;span class="n"&gt;iterator&lt;/span&gt; &lt;span class="n"&gt;it&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        &lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;it&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;div&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;begin&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="n"&gt;it&lt;/span&gt;&lt;span class="o"&gt;!=&lt;/span&gt;&lt;span class="n"&gt;div&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="n"&gt;it&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-            &lt;span class="n"&gt;getdivsor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;it&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="p"&gt;}&lt;/span&gt;
-        &lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;primecount&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-            &lt;span class="kt"&gt;long&lt;/span&gt; &lt;span class="kt"&gt;long&lt;/span&gt; &lt;span class="n"&gt;temp&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            &lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;totalcount&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-                &lt;span class="n"&gt;temp&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;temp&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;prime&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;MOD&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-                &lt;span class="n"&gt;totalcount&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            &lt;span class="p"&gt;}&lt;/span&gt;
-            &lt;span class="n"&gt;ans&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ans&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;temp&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;MOD&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        &lt;span class="p"&gt;}&lt;/span&gt;
-        &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;%lld&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;ans&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-</content><link href="/archives/Codechef July Challenge 2014部分题解/" rel="alternate"/><published>2014-07-14T17:31:52+08:06</published></entry><entry><id>/archives/【C++实现】HeadFirst设计模式之观察者模式/</id><title>【C++实现】HeadFirst设计模式之观察者模式</title><updated>2020-02-22T16:38:08.956925+00:00</updated><content>&lt;blockquote&gt;&lt;p&gt;&lt;strong&gt;观察者模式&lt;/strong&gt;定义了对象之间的一对多依赖，这样一来，当一个对象改变状态时，它的所有依赖者都会收到通知并自动更新。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>/</id><title>Don't ask me why</title><updated>2020-08-30T13:17:44.236528+08:06</updated><author><name>Chichele</name></author><link href="/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>https://cdn.jsdelivr.net/gh/Chichele/Blog-With-GitHub-Boilerplate@gh-pages/logo.png</logo><subtitle>but time has passed us by</subtitle><entry><id>/archives/【C++实现】HeadFirst设计模式之观察者模式/</id><title>【C++实现】HeadFirst设计模式之观察者模式</title><updated>2020-08-30T13:17:44.236901+00:00</updated><content>&lt;blockquote&gt;&lt;p&gt;&lt;strong&gt;观察者模式&lt;/strong&gt;定义了对象之间的一对多依赖，这样一来，当一个对象改变状态时，它的所有依赖者都会收到通知并自动更新。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;一方可称为主题（subject），另一方可称为观察者（observer），一个主题可拥有多个观察者。当主题的数据有变动时，就会通知所有订阅了它的观察者。在这之后的操作有两种：&lt;/p&gt;
 &lt;ul&gt;
@@ -339,13 +141,13 @@
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-</content><link href="/archives/【C++实现】HeadFirst设计模式之观察者模式/" rel="alternate"/><published>2014-08-02T14:42:15+08:06</published></entry><entry><id>/archives/在Ubuntu14.04下使用ap-hotspot建立无线热点（AP mode）/</id><title>在Ubuntu14.04下使用ap-hotspot建立无线热点（AP mode）</title><updated>2020-02-22T16:38:08.956898+00:00</updated><content>&lt;p&gt;从&lt;code&gt;https://launchpad.net/~nilarimogard/+archive/ubuntu/webupd8/+packages&lt;/code&gt; 下载最新版ap-hotspot并安装，我使用的是&lt;code&gt;ap-hotspot - 0.3.1-1~webupd8~0&lt;/code&gt;。终端下执行&lt;code&gt;sudo ap-hotspot configure&lt;/code&gt;&lt;/p&gt;
+</content><link href="/archives/【C++实现】HeadFirst设计模式之观察者模式/" rel="alternate"/><published>2014-08-02T14:42:15+08:06</published></entry><entry><id>/archives/在Ubuntu14.04下使用ap-hotspot建立无线热点（AP mode）/</id><title>在Ubuntu14.04下使用ap-hotspot建立无线热点（AP mode）</title><updated>2020-08-30T13:17:44.236874+00:00</updated><content>&lt;p&gt;从&lt;code&gt;https://launchpad.net/~nilarimogard/+archive/ubuntu/webupd8/+packages&lt;/code&gt; 下载最新版ap-hotspot并安装，我使用的是&lt;code&gt;ap-hotspot - 0.3.1-1~webupd8~0&lt;/code&gt;。终端下执行&lt;code&gt;sudo ap-hotspot configure&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;这一步会检查ubuntu的网络和WIFI接口，确定后会提示你配置热点，输入ssid和密码之类的就行了&lt;/p&gt;
 &lt;p&gt;接着执行&lt;code&gt;sudo ap-hotspot start&lt;/code&gt;即可。&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;可是现实总是残酷的，在Ubuntu14.04下这样还不能够成功。因为自带的新版hostapd有bug，所以我们需要降级到一个可用的旧版本。参考链接：&lt;a href="http://askubuntu.com/questions/464178/ap-hotspot-not-creating-in-kubuntu-14-04"&gt;http://askubuntu.com/questions/464178/ap-hotspot-not-creating-in-kubuntu-14-04&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;按这链接操作，安装好旧版hostapd之后，使用ap-hotspot会提示没有安装，需要重新安装并配置。最终即可成功建立AP热点。&lt;/p&gt;
-</content><link href="/archives/在Ubuntu14.04下使用ap-hotspot建立无线热点（AP mode）/" rel="alternate"/><published>2014-08-15T22:36:02+08:06</published></entry><entry><id>/archives/placement new的使用及好处/</id><title>placement new的使用及好处</title><updated>2020-02-22T16:38:08.956872+00:00</updated><content>&lt;p&gt;详细的介绍可以看这几篇文章：&lt;/p&gt;
+</content><link href="/archives/在Ubuntu14.04下使用ap-hotspot建立无线热点（AP mode）/" rel="alternate"/><published>2014-08-15T22:36:02+08:06</published></entry><entry><id>/archives/placement new的使用及好处/</id><title>placement new的使用及好处</title><updated>2020-08-30T13:17:44.236848+00:00</updated><content>&lt;p&gt;详细的介绍可以看这几篇文章：&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://blog.csdn.net/zhangxinrun/article/details/5940019"&gt;C++中placement new操作符（经典）&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://www.cppblog.com/kongque/archive/2010/02/20/108093.html"&gt;Placement new的用法及用途&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://www.cnblogs.com/felixYeou/archive/2009/04/15/1436209.html"&gt;（转）遵循placement new的用法规范&lt;/a&gt;&lt;/p&gt;
@@ -358,7 +160,7 @@
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;建立对象数组时，能够调用带参数的构造函数。&lt;/strong&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-</content><link href="/archives/placement new的使用及好处/" rel="alternate"/><published>2014-08-17T16:59:02+08:06</published></entry><entry><id>/archives/Requests模块中持续性的 Cookie 会话/</id><title>Requests模块中持续性的 Cookie 会话</title><updated>2020-02-22T16:38:08.956847+00:00</updated><content>&lt;p&gt;Requests模块有如下优点：&lt;/p&gt;
+</content><link href="/archives/placement new的使用及好处/" rel="alternate"/><published>2014-08-17T16:59:02+08:06</published></entry><entry><id>/archives/Requests模块中持续性的 Cookie 会话/</id><title>Requests模块中持续性的 Cookie 会话</title><updated>2020-08-30T13:17:44.236820+00:00</updated><content>&lt;p&gt;Requests模块有如下优点：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;国际化域名和 URLs&lt;/li&gt;
 &lt;li&gt;Keep-Alive &amp;amp; 连接池&lt;/li&gt;
@@ -384,7 +186,7 @@
 &lt;p&gt;这里的page变量是一个&lt;code&gt;Response&lt;/code&gt;对象，page.content即是这个get请求返回的HTML内容。这时session自动将百度返回的Cookie给记录下来。&lt;/p&gt;
 &lt;p&gt;post请求同样类似。url，postData，headers，proxy等都可以作为参数，非常方便！&lt;/p&gt;
 &lt;p&gt;Requests模块本身就是为了易用而生，它的文档也非常简洁。&lt;/p&gt;
-</content><link href="/archives/Requests模块中持续性的 Cookie 会话/" rel="alternate"/><published>2014-08-28T11:41:38+08:06</published></entry><entry><id>/archives/Python模拟登录wap版百度贴吧+自动回贴/</id><title>Python模拟登录wap版百度贴吧+自动回贴</title><updated>2020-02-22T16:38:08.956819+00:00</updated><content>&lt;p&gt;模拟登录的原理都差不多，大致都是这样：&lt;/p&gt;
+</content><link href="/archives/Requests模块中持续性的 Cookie 会话/" rel="alternate"/><published>2014-08-28T11:41:38+08:06</published></entry><entry><id>/archives/Python模拟登录wap版百度贴吧+自动回贴/</id><title>Python模拟登录wap版百度贴吧+自动回贴</title><updated>2020-08-30T13:17:44.236793+00:00</updated><content>&lt;p&gt;模拟登录的原理都差不多，大致都是这样：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;打开首页获取相关cookie；&lt;/li&gt;
 &lt;li&gt;提交登陆表单（即用户名与密码）；&lt;/li&gt;
@@ -400,7 +202,7 @@
 &lt;hr&gt;
 &lt;h4&gt;结尾语&lt;/h4&gt;
 &lt;p&gt;话说当完成一项曾经的难题之后，总是发现没什么详细记录的欲望了。。在这里我大概描述了一下实现的路线，相关代码我放在&lt;a href="https://github.com/tigerstudent"&gt;我的Github&lt;/a&gt;上了，如果有什么问题或建议欢迎交流！&lt;/p&gt;
-</content><link href="/archives/Python模拟登录wap版百度贴吧+自动回贴/" rel="alternate"/><published>2014-09-18T23:09:46+08:06</published></entry><entry><id>/archives/Web自动化测试工具——Selenium/</id><title>Web自动化测试工具——Selenium</title><updated>2020-02-22T16:38:08.956794+00:00</updated><content>&lt;p&gt;在最近的Web课程设计上我接触到了&lt;code&gt;Selenium&lt;/code&gt;这款Web自动化测试工具，它可以通过一系列&lt;code&gt;find_element()&lt;/code&gt;方法定位到目标元素，对其发送模拟按键操作，使操作自动化。&lt;/p&gt;
+</content><link href="/archives/Python模拟登录wap版百度贴吧+自动回贴/" rel="alternate"/><published>2014-09-18T23:09:46+08:06</published></entry><entry><id>/archives/Web自动化测试工具——Selenium/</id><title>Web自动化测试工具——Selenium</title><updated>2020-08-30T13:17:44.236765+00:00</updated><content>&lt;p&gt;在最近的Web课程设计上我接触到了&lt;code&gt;Selenium&lt;/code&gt;这款Web自动化测试工具，它可以通过一系列&lt;code&gt;find_element()&lt;/code&gt;方法定位到目标元素，对其发送模拟按键操作，使操作自动化。&lt;/p&gt;
 &lt;p&gt;首先，使用pip安装Selenium的Python模块。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;find_element_by_name()&lt;/code&gt;方法就是通过&lt;code&gt;name&lt;/code&gt;属性来定位元素，然后通过&lt;code&gt;send_keys()&lt;/code&gt;发送模拟按键。基于这样的操作基本可以完成各种web下的模拟操作。下面是我写的例程:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;time&lt;/span&gt;
@@ -423,14 +225,14 @@
 &lt;p&gt;如果遇到以下错误&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;selenium.common.exceptions.WebDriverException: Message: 'ChromeDriver executable needs to be available in the path.&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;解决方法在&lt;a href="http://selenium-python.readthedocs.org/faq.html#how-to-use-chromedriver"&gt;http://selenium-python.readthedocs.org/faq.html#how-to-use-chromedriver&lt;/a&gt;&lt;/p&gt;
-</content><link href="/archives/Web自动化测试工具——Selenium/" rel="alternate"/><published>2014-09-18T23:49:59+08:06</published></entry><entry><id>/archives/使用Python操作redis遇到的坑/</id><title>使用Python操作redis遇到的坑</title><updated>2020-02-22T16:38:08.956765+00:00</updated><content>&lt;h2&gt;写在前面&lt;/h2&gt;
+</content><link href="/archives/Web自动化测试工具——Selenium/" rel="alternate"/><published>2014-09-18T23:49:59+08:06</published></entry><entry><id>/archives/使用Python操作redis遇到的坑/</id><title>使用Python操作redis遇到的坑</title><updated>2020-08-30T13:17:44.236735+00:00</updated><content>&lt;h2&gt;写在前面&lt;/h2&gt;
 &lt;p&gt;基于Python3.4，往redis里插入数据后再读出来时所有键与值都是byte类型的，就是说如果你要使用这些值全部都得转换编码！想想就崩溃！但又想想肯定会有简单的解决方法...&lt;/p&gt;
 &lt;h2&gt;问题解决&lt;/h2&gt;
 &lt;p&gt;于是我查看了python-redis连接redis的参数，发现了&lt;code&gt;decode_responses&lt;/code&gt;，默认值为False，从参数名上来看好像就是它了。好了我不扯淡了其实最后证明就是它！我将它设置为True就ok了。&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;redis.StrictRedis(host=db_host, port=db_port, password=db_password, decode_responses=True)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;最后有点不理解的是，这种有用的参数为什么默认值为False。。。&lt;/p&gt;
-</content><link href="/archives/使用Python操作redis遇到的坑/" rel="alternate"/><published>2015-05-11T00:37:15+08:06</published></entry><entry><id>/archives/Tornado异步与延迟任务/</id><title>Tornado异步与延迟任务</title><updated>2020-02-22T16:38:08.956733+00:00</updated><content>&lt;p&gt;最近一直在研究Tornado异步操作，然而一番研究后发现要使一个函数异步化的最好方法就是采用相关异步库，但目前很多功能强大的库都不在此列。经过一番查找文档和搜索示范，终于发现了&lt;code&gt;ThreadPoolExecutor&lt;/code&gt;模块和&lt;code&gt;run_on_executor&lt;/code&gt;装饰器。用法就是建立线程池，用&lt;code&gt;run_on_executor&lt;/code&gt;装饰的函数即运行在其中线程中，从而从主线程中分离出来，达到异步的目的。
+</content><link href="/archives/使用Python操作redis遇到的坑/" rel="alternate"/><published>2015-05-11T00:37:15+08:06</published></entry><entry><id>/archives/Tornado异步与延迟任务/</id><title>Tornado异步与延迟任务</title><updated>2020-08-30T13:17:44.236704+00:00</updated><content>&lt;p&gt;最近一直在研究Tornado异步操作，然而一番研究后发现要使一个函数异步化的最好方法就是采用相关异步库，但目前很多功能强大的库都不在此列。经过一番查找文档和搜索示范，终于发现了&lt;code&gt;ThreadPoolExecutor&lt;/code&gt;模块和&lt;code&gt;run_on_executor&lt;/code&gt;装饰器。用法就是建立线程池，用&lt;code&gt;run_on_executor&lt;/code&gt;装饰的函数即运行在其中线程中，从而从主线程中分离出来，达到异步的目的。
 另外，Tornado的IOLoop实例还有&lt;code&gt;IOLoop.add_callback(callback, *args, **kwargs)&lt;/code&gt;方法，文档中的描述如下：&lt;/p&gt;
 &lt;blockquote&gt;&lt;p&gt;Calls the given callback on the next I/O loop iteration.
 It is safe to call this method from any thread at any time, except from a signal handler. Note that this is the &lt;strong&gt;only&lt;/strong&gt; method in IOLoop that makes this thread-safety guarantee; all other interaction with the IOLoop must be done from that IOLoop‘s thread. add_callback() may be used to transfer control from other threads to the IOLoop‘s thread.&lt;/p&gt;
@@ -473,7 +275,7 @@ It is safe to call this method from any thread at any time, except from a signal
     &lt;span class="n"&gt;http_server&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;listen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;options&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
     &lt;span class="n"&gt;tornado&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ioloop&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;IOLoop&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;instance&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-</content><link href="/archives/Tornado异步与延迟任务/" rel="alternate"/><published>2015-05-24T00:40:11+08:06</published></entry><entry><id>/archives/自动保存文件为UTF-8编码格式/</id><title>自动保存文件为UTF-8编码格式</title><updated>2020-02-22T16:38:08.956674+00:00</updated><content>&lt;h1&gt;写在前面&lt;/h1&gt;
+</content><link href="/archives/Tornado异步与延迟任务/" rel="alternate"/><published>2015-05-24T00:40:11+08:06</published></entry><entry><id>/archives/自动保存文件为UTF-8编码格式/</id><title>自动保存文件为UTF-8编码格式</title><updated>2020-08-30T13:17:44.236668+00:00</updated><content>&lt;h1&gt;写在前面&lt;/h1&gt;
 &lt;p&gt;最近在琢磨跨平台开发，需要把代码文件都统一保存为&lt;code&gt;UTF8 no bom&lt;/code&gt;的格式，但找了很久也没找到将文件编码格式自动保存为&lt;code&gt;UTF8 no bom&lt;/code&gt;的方法。尝试过VS的插件&lt;code&gt;Force UTF-8(No BOM)&lt;/code&gt;，但可能因为版本问题，在我的&lt;code&gt;VS2019（16.3.7）&lt;/code&gt;上并未生效。&lt;/p&gt;
 &lt;p&gt;然后偶然发现了&lt;code&gt;EditorConfig&lt;/code&gt;可以搞定，VS以及很多其它编辑器都支持它。&lt;/p&gt;
 &lt;h1&gt;解决办法&lt;/h1&gt;
@@ -490,4 +292,25 @@ charset = utf-8
 [*.{js,py}]
 charset = utf-8&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;可以从上面的注释内容看出，EditorConfig 支持针对不同文件后缀使用不同配置方案。除了设置文件编码外，EditorConfig还支持代码缩进等配置，具体使用方法到&lt;a href="https://EditorConfig.org"&gt;https://EditorConfig.org&lt;/a&gt;查看。&lt;/p&gt;
-</content><link href="/archives/自动保存文件为UTF-8编码格式/" rel="alternate"/><published>2020-02-23T00:36:12+08:06</published></entry></feed>
+</content><link href="/archives/自动保存文件为UTF-8编码格式/" rel="alternate"/><published>2020-02-23T00:36:12+08:06</published></entry><entry><id>/archives/opus音频压缩的Python实现/</id><title>opus音频压缩的Python实现</title><updated>2020-08-30T13:17:44.236602+00:00</updated><content>&lt;blockquote&gt;&lt;p&gt;最近我在开发语音识别应用的时候，接触到opus这种有损音频压缩格式，大概能压缩到原音频的十分之一大小，相当优秀，据说已实际取代了speex的地位。opus的使用上是比较简单的，但网上的资料不多，也花了我一些时间去理解消化，特此记录并分享一下。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1&gt;依赖安装&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Linux下执行&lt;code&gt;pip3 install opuslib&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Windows下执行安装&lt;code&gt;pip3 install opuslib&lt;/code&gt;后，运行时仍会报缺少opus环境，暂未解决。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;样例代码&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code&gt;# 以下代码包含音频压缩与解压
+import opuslib
+OPUS_FRAME_SIZE = 640 # 单次压缩的片段字节大小，可根据具体业务设置
+encoder = opuslib.Encoder(voice_record.RATE, voice_record.CHANNELS, "voip") # opus压缩有3种模式'voip','audio','restricted_lowdelay'
+decoder = opuslib.Decoder(voice_record.RATE, voice_record.CHANNELS)
+
+encoder.reset_state() # 重置状态
+decoder.reset_state()
+
+# voice_piece是待压缩的音频片段，大小为OPUS_FRAME_SIZE个字节
+tmp_enc_piece = encoder.encode(voice_piece, int(OPUS_FRAME_SIZE/2)) # 第二个参数是frame_size，每一frame实际是2字节，所以这里要除以2
+tmp_dec_piece = decoder.decode(tmp_enc_piece, int(OPUS_FRAME_SIZE/2), False)&lt;/code&gt;&lt;/pre&gt;
+</content><link href="/archives/opus音频压缩的Python实现/" rel="alternate"/><published>2020-08-30T21:14:00+08:06</published></entry></feed>
